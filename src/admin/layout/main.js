@@ -5,17 +5,20 @@ import {
     UserOutlined,
     VideoCameraOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu } from 'antd';
-import React, { useState } from 'react';
+import {Layout, Menu} from 'antd';
+import React, {useState} from 'react';
 import './main.css';
-const { Header, Sider, Content } = Layout;
+import {Link, Route, Routes} from "react-router-dom";
+import User from "../user/main";
+
+const {Header, Sider, Content} = Layout;
 
 const MainLayout = () => {
     const [collapsed, setCollapsed] = useState(false);
     return (
         <Layout>
             <Sider trigger={null} collapsible collapsed={collapsed}>
-                <div className="logo" />
+                <div className="logo"/>
                 <Menu
                     theme="dark"
                     mode="inline"
@@ -23,27 +26,27 @@ const MainLayout = () => {
                     items={[
                         {
                             key: '1',
-                            icon: <UserOutlined />,
+                            icon: <Link to={"/admin/user"}><UserOutlined/></Link>,
                             label: 'user',
                         },
                         {
                             key: '2',
-                            icon: <VideoCameraOutlined />,
+                            icon: <Link to={"/admin/course"}><VideoCameraOutlined/></Link>,
                             label: 'course',
                         },
                         {
                             key: '3',
-                            icon: <UploadOutlined />,
+                            icon: <UploadOutlined/>,
                             label: 'queue',
                         },
                         {
                             key: '4',
-                            icon: <UploadOutlined />,
+                            icon: <UploadOutlined/>,
                             label: 'group',
                         },
                         {
                             key: '5',
-                            icon: <UploadOutlined />,
+                            icon: <UploadOutlined/>,
                             label: 'admin',
                         },
                     ]}
@@ -69,7 +72,11 @@ const MainLayout = () => {
                         minHeight: 280,
                     }}
                 >
-                    Content
+
+                    <Routes>
+                        <Route exact={true} path={"/admin/user"} element={<User/>}/>
+                    </Routes>
+
                 </Content>
             </Layout>
         </Layout>
