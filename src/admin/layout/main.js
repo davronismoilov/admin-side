@@ -9,11 +9,12 @@ import {Layout, Menu} from 'antd';
 import React, {useState} from 'react';
 import './main.css';
 import {Link, Route, Routes} from "react-router-dom";
-import User from "../user/main";
+import User from "../user/user";
+import Course from "../course/course";
 
 const {Header, Sider, Content} = Layout;
 
-const MainLayout = () => {
+const   MainLayout = () => {
     const [collapsed, setCollapsed] = useState(false);
     return (
         <Layout>
@@ -75,6 +76,7 @@ const MainLayout = () => {
 
                     <Routes>
                         <Route exact={true} path={"/admin/user"} element={<User/>}/>
+                        <Route exact={true} path={"/admin/course"} element={<Course/>}/>
                     </Routes>
 
                 </Content>
