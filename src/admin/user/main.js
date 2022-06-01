@@ -3,16 +3,16 @@ import axios from "axios";
 
 function User(){
 
-    const [users, setUser] = useState([])
+    let [users, setUser] = useState([])
 
     useEffect(()=>{
-        axios.get("http://localhost:9000/test").then((res)=>{
-            console.log(res)
+        axios.get("http://localhost:9000/api/v1/user?page=0").then((res)=>{
+            console.log(res.data)
         })
     },[])
 
     return <div>
-        HI USER
+        Hello
     </div>
 }
 export default User;
