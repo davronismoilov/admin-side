@@ -1,0 +1,13 @@
+.logo {
+    height: 32px;
+    margin: 16px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.site-layout .site-layout-background {
+    /*background: linear-gradient(90deg, #C7C5F4, #776BCC);*/
+    height: 0;
+}
+.ant-layout-content{
+    padding: 20px;
+}
