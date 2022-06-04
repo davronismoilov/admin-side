@@ -4,6 +4,7 @@ import {
     UploadOutlined,
     UserOutlined,
     VideoCameraOutlined,
+    SettingOutlined, LaptopOutlined, NotificationOutlined
 } from '@ant-design/icons';
 import {Layout, Menu} from 'antd';
 import React, {useState} from 'react';
@@ -11,8 +12,10 @@ import './main.css';
 import {Link, Route, Routes} from "react-router-dom";
 import User from "../user/user";
 import Course from "../course/course";
+import MainSettings from "../settings/settings";
 
 const {Header, Sider, Content} = Layout;
+
 
 const MainLayout = () => {
     const [collapsed, setCollapsed] = useState(false);
@@ -50,6 +53,11 @@ const MainLayout = () => {
                             icon: <UploadOutlined/>,
                             label: 'admin',
                         },
+                        {
+                            key: '6',
+                            icon: <Link to={"/admin/settings"}><SettingOutlined/></Link>,
+                            label: 'settings',
+                        },
                     ]}
                 />
             </Sider>
@@ -77,6 +85,7 @@ const MainLayout = () => {
                     <Routes>
                         <Route exact={true} path={"/admin/user"} element={<User/>}/>
                         <Route exact={true} path={"/admin/course"} element={<Course/>}/>
+                        <Route exact={true} path={"/admin/settings"} element={<MainSettings/>}/>
                     </Routes>
 
                 </Content>
