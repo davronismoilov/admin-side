@@ -14,7 +14,7 @@ import Course from "../course/Course";
 
 const {Header, Sider, Content} = Layout;
 
-const   MainLayout = () => {
+const MainLayout = () => {
     const [collapsed, setCollapsed] = useState(false);
     return (
         <Layout>
