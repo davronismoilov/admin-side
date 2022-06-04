@@ -79,7 +79,7 @@ let drawTable = () => {
             <Divider />
 
             <Table
-                rowSelection={{
+                rowSelection = {{
                     type: selectionType,
                     ...rowSelection,
                 }}
