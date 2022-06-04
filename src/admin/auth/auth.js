@@ -65,7 +65,6 @@ function Auth() {
             </div>
         </div>
     </div>
-
-}
+};
 
 export default Auth;

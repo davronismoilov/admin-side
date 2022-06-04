@@ -1,9 +1,10 @@
-import React from "react"
-import MainLayout from "./admin/layout/Main";
+import MainLayout from "./admin/layout/main";
+import Test from "./admin/layout/test";
 
 const App = () => {
     return <div>
-        <MainLayout/>
+        {/*<MainLayout/>*/}
+        <Test/>
     </div>
 }
 export default App;
