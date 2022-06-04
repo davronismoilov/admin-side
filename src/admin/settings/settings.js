@@ -1,105 +1,101 @@
-import React from 'react';
-import { Tabs, Table, Radio, Divider, Switch  } from 'antd';
+import React, {useState} from 'react';
+import { Tabs, Table, Radio, Divider, Switch, Button  } from 'antd';
 const { TabPane } = Tabs;
 
 const onChange = (key) => {
     console.log(key);
 };
 
+const SwitchButton = () => <Switch defaultUnChecked onChange={onChange} />;
+
+
 const columns = [
     {
+        title: 'Role',
+        dataIndex: 'role',
+    },
+    {
         title: 'Panel visibility',
-        dataIndex: 'panel',
-        render: (text) => <a>{text}</a>,
+        dataIndex: 'visibility',
     },
     {
-        title: 'Age',
-        dataIndex: 'age',
+        title: 'Info btn',
+        dataIndex: 'info',
     },
     {
-        title: 'Address',
-        dataIndex: 'address',
+        title: 'Edit btn',
+        dataIndex: 'edit',
+    },
+    {
+        title: 'Delete btn',
+        dataIndex: 'delete',
     },
 ];
-const data = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-    },
-    {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-    },
-    {
-        key: '4',
-        name: 'Disabled User',
-        age: 99,
-        address: 'Sidney No. 1 Lake Park',
-    },
-]; // rowSelection object indicates the need for row selection
+const data = [];
 
-const rowSelection = {
-    onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    },
-    getCheckboxProps: (record: DataType) => ({
-        disabled: record.name === 'Disabled User', // Column configuration not to be checked
-        name: record.name,
-    }),
-};
+for (let i = 0; i < 46; i++) {
+    data.push({
+        role: `Edward King ${i}`,
+        visibility: SwitchButton(),
+        address: `London, Park Lane no. ${i}`,
+    });
+}
 
 // const switch = () => <Switch defaultChecked onChange={onChange} />;
 
-let drawTable = () => {
-    const [selectionType, setSelectionType] = useState('switch');
-    return (
-        <div>
-            <Radio.Group
-                onChange={({ target: { value } }) => {
-                    setSelectionType(value);
-                }}
-                value={selectionType}
-            >
-                <Radio value="checkbox">Checkbox</Radio>
-            </Radio.Group>
 
-            <Divider />
-        <div>
+let DrawTable = () => {
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-            <Divider />
+    const start = () => {
+        setLoading(true); // ajax request after empty completing
 
-            <Table
-                rowSelection = {{
-                    type: selectionType,
-                    ...rowSelection,
-                }}
-                columns={columns}
-                dataSource={data}
-            />
-        </div>
-    );
+        setTimeout(() => {
+            setSelectedRowKeys([]);
+            setLoading(false);
+        }, 1000);
+    };
+
+    const onSelectChange = (newSelectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys);
+        setSelectedRowKeys(newSelectedRowKeys);
+    };
+
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: onSelectChange,
+    };
+    const hasSelected = selectedRowKeys.length > 0;
+        return (
+            <div>
+        {/*        <div*/}
+        {/*            style={{*/}
+        {/*                marginBottom: 16,*/}
+        {/*            }}>*/}
+        {/*            <span*/}
+        {/*                style={{*/}
+        {/*                    marginLeft: 8,*/}
+        {/*                }}*/}
+        {/*            >*/}
+        {/*  {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}*/}
+        {/*</span>*/}
+        {/*        </div>*/}
+                <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+            </div>
+        );
 }
 
 const MainSettings = () => (
     <Tabs onChange={onChange} type="card">
         <TabPane tab="User panel" key="1">
-            {drawTable()};
+            {DrawTable()};
         </TabPane>
         <TabPane tab="Course panel" key="2">
-            {drawTable()};
+            {DrawTable()};
         </TabPane>
         <TabPane tab="Group panel" key="3">
-            {drawTable()};
+            {DrawTable()};
         </TabPane>
     </Tabs>
 );
