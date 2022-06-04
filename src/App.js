@@ -1,4 +1,5 @@
-import MainLayout from "./admin/layout/main";
+import React from "react"
+import MainLayout from "./admin/layout/Main";
 
 const App = () => {
     return <div>

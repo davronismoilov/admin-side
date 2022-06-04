@@ -10,7 +10,7 @@ import React, {useState} from 'react';
 import './main.css';
 import {Link, Route, Routes} from "react-router-dom";
 import User from "../user/user";
-import Course from "../course/course";
+import Course from "../course/Course";
 
 const {Header, Sider, Content} = Layout;
 
