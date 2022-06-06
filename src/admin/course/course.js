@@ -30,7 +30,7 @@ function Course() {
     const onSearch = (value) => {
         setSearch(value)
 
-        axios.get(`http://localhost:8081/api/course/get?name=${value}`).then((res) => {
+        axios.get(`http://localhost:9000/api/course/get?name=${value}`).then((res) => {
             if (res.data.status) {
                 console.log(res.data.data)
                 setCourses([{
@@ -48,7 +48,7 @@ function Course() {
     }
 
     useEffect(() => {
-        axios.get("http://localhost:8081/api/course/list/").then((res) => {
+        axios.get("http://localhost:9000/api/course/list/").then((res) => {
             if (res.data.status) {
                 setCourses(res.data.data.content)
                 setPage(res.data.data.totalPages)
@@ -62,7 +62,7 @@ function Course() {
             helper++;
         else if (hasNext === -1)
             helper--;
-        axios.get("http://localhost:8081/api/course/list/?page=" + (helper) + "").then((res) => {
+        axios.get("http://localhost:9000/api/course/list/?page=" + (helper) + "").then((res) => {
             if (res.data.status) {
                 setCourses(res.data.data.content)
                 setPage(res.data.data.totalPages)
@@ -73,7 +73,7 @@ function Course() {
 
     // 1 = true, -1 = false, 0 = nothing
     function deleteCourse(id) {
-        axios.delete(`http://localhost:8081/api/course/delete/${id}`).then((res) => {
+        axios.delete(`http://localhost:9000/api/course/delete/${id}`).then((res) => {
             if (res.status === 204) {
                 alert("Deleted")
                 getCourse(0)

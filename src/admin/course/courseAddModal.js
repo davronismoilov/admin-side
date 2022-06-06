@@ -18,7 +18,7 @@ const CourseAddModal = ({toggle, isOpen, getCourse}) => {
         }
 
 
-        axios.post("http://localhost:8081/api/course/add", data).then((res) => {
+        axios.post("http://localhost:9000/api/course/add", data).then((res) => {
             console.log(res)
             toggle()
             clearInput()

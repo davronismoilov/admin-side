@@ -16,7 +16,7 @@ const CourseAddModal = ({toggle, isOpen, getCourse, updatingModal}) => {
             price,
             duration
         }
-        axios.put(`http://localhost:8081/api/course/update/${updatingModal}`, data).then((res) => {
+        axios.put(`http://localhost:9000/api/course/update/${updatingModal}`, data).then((res) => {
             if (res.data.status) {
                 console.log(res)
                 console.log("Successfully updated")
@@ -33,7 +33,7 @@ const CourseAddModal = ({toggle, isOpen, getCourse, updatingModal}) => {
     }, [updatingModal])
 
     function getOneCourse(id) {
-        axios.get(`http://localhost:8081/api/course/get/${id}`).then((res) => {
+        axios.get(`http://localhost:9000/api/course/get/${id}`).then((res) => {
             console.log(res.data, "Update Modal Get one course")
             if (res.data.status) {
                 setName(res.data.data.name)

@@ -11,10 +11,41 @@ import './main.css';
 import {Link, Route, Routes} from "react-router-dom";
 import User from "../user/user";
 import Course from "../course/course";
+import axios from "axios";
 
 const {Header, Sider, Content} = Layout;
+const AdminContext = React.createContext([])
 
-const   MainLayout = () => {
+const MainLayout = () => {
+    const [objects, setObject] = useState({
+        headers: ["id", "name", "username", "password"],
+        body: [{
+            id: 1,
+            name: "Maqsud",
+            username: "123",
+            password: 123
+        },
+            {
+                id: 2,
+                name: "Maqsud 2",
+                username: "123 cfs",
+                password: 123657676
+            },
+            {
+                id: 3,
+                name: "Maqsud 4",
+                username: "sdfsdfsdf sdf sdfsd fcfs",
+                password: 9999999
+            },
+        ]
+    })
+
+    function getDataFromServer(url) {
+        axios.get(url).then((res) => {
+            setObject(res.data);
+        })
+    }
+
     const [collapsed, setCollapsed] = useState(false);
     return (
         <Layout>
@@ -27,12 +58,13 @@ const   MainLayout = () => {
                     items={[
                         {
                             key: '1',
-                            icon: <Link to={"/admin/user"}><UserOutlined/></Link>,
+                            icon: <Link to={"/"} onClick={getDataFromServer("http://localhost:9000/api/user/list")}>
+                                <UserOutlined/></Link>,
                             label: 'user',
                         },
                         {
                             key: '2',
-                            icon: <Link to={"/admin/course"}><VideoCameraOutlined/></Link>,
+                            icon: <Link to={"/"}><VideoCameraOutlined/></Link>,
                             label: 'course',
                         },
                         {
@@ -74,10 +106,25 @@ const   MainLayout = () => {
                     }}
                 >
 
-                    <Routes>
-                        <Route exact={true} path={"/admin/user"} element={<User/>}/>
-                        <Route exact={true} path={"/admin/course"} element={<Course/>}/>
-                    </Routes>
+                    <table className={"table"}>
+                        <thead>
+                        <tr>
+                            {objects.headers.map((data) => {
+                                return <th>{data}</th>
+                            })}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {objects.body.map((data, index) => {
+                            return <tr>
+                                {objects.headers.map((td) => {
+                                    return <td>{data[td]}</td>
+                                })}
+                            </tr>
+                        })}
+                        </tbody>
+
+                    </table>
 
                 </Content>
             </Layout>
