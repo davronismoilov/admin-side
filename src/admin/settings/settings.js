@@ -35,9 +35,9 @@ const columns = [
 
 const MainSettings = () => {
     const [switchBtnStatus, setSwitchBtnStatus] = useState([false, false, false]);
-    const [checkboxBtnStatusInfo, setCheckboxBtnStatusInfo] = useState([false, false, false]);
-    const [checkboxBtnStatusEdit, setCheckboxBtnStatusEdit] = useState([false, false, false]);
-    const [checkboxBtnStatusDelete, setCheckboxBtnStatusDelete] = useState([false, false, false]);
+    const [checkboxBtnStatusInfo, setCheckboxBtnStatusInfo] = useState([[false, false, false], [false, false, false], [false, false, false]]);
+    const [checkboxBtnStatusEdit, setCheckboxBtnStatusEdit] = useState([[false, false, false], [false, false, false], [false, false, false]]);
+    const [checkboxBtnStatusDelete, setCheckboxBtnStatusDelete] = useState([[false, false, false], [false, false, false], [false, false, false]]);
     const [data, setData] = useState([]);
     let [permissions, setPermissions] = useState({name:"", permissions:[{role: "", list:[]}]});
 
@@ -52,15 +52,15 @@ const MainSettings = () => {
     const onChange = (ind, btn) => {
         switch (btn){
             case "info" :
-                checkboxBtnStatusInfo[ind] = !checkboxBtnStatusInfo[ind];
+                checkboxBtnStatusInfo[0][ind] = !checkboxBtnStatusInfo[0][ind];
                 setCheckboxBtnStatusInfo(checkboxBtnStatusInfo);
                 break;
             case "edit" :
-                checkboxBtnStatusEdit[ind] = !checkboxBtnStatusEdit[ind];
+                checkboxBtnStatusEdit[1][ind] = !checkboxBtnStatusEdit[1][ind];
                 setCheckboxBtnStatusEdit(checkboxBtnStatusEdit);
                 break;
             default :
-                checkboxBtnStatusDelete[ind] = !checkboxBtnStatusDelete[ind];
+                checkboxBtnStatusDelete[2][ind] = !checkboxBtnStatusDelete[2][ind];
                 setCheckboxBtnStatusDelete(checkboxBtnStatusDelete);
         }
     };
@@ -87,21 +87,21 @@ const MainSettings = () => {
         setData(updateDate())
     })
 
-    function saveBtnOnclick(panelName){
+    function saveBtnOnclick(panelName, ind){
         permissions = {
             name: panelName,
             permissions: [
                 {
                   role: "ROLE_USER",
-                  list: [checkboxBtnStatusInfo[0], checkboxBtnStatusEdit[0], checkboxBtnStatusDelete[0]],
+                  list: [checkboxBtnStatusInfo[ind][0], checkboxBtnStatusEdit[ind][0], checkboxBtnStatusDelete[ind][0]],
                 },
                 {
                     role: "ROLE_ADMIN",
-                    list: [checkboxBtnStatusInfo[1], checkboxBtnStatusEdit[1], checkboxBtnStatusDelete[1]],
+                    list: [checkboxBtnStatusInfo[ind][1], checkboxBtnStatusEdit[ind][1], checkboxBtnStatusDelete[ind][1]],
                 },
                 {
                     role: "ROLE_SUPER_ADMIN",
-                    list: [checkboxBtnStatusInfo[2], checkboxBtnStatusEdit[2], checkboxBtnStatusDelete[2]],
+                    list: [checkboxBtnStatusInfo[ind][2], checkboxBtnStatusEdit[ind][2], checkboxBtnStatusDelete[ind][2]],
                 },
             ]
         }
@@ -119,14 +119,14 @@ const MainSettings = () => {
         <Tabs onChange={onChange} type="card">
             <TabPane tab="User panel" key="1"> <Table dataSource={data} columns={columns}/>
                 <Button type="primary" block onClick={() =>{
-                    saveBtnOnclick("user");
+                    saveBtnOnclick("user", 0);
                 }}>Save</Button></TabPane>
             <TabPane tab="Course panel" key="2"> <Table dataSource={data} columns={columns}/><Button type="primary"  block onClick={() =>{
-                saveBtnOnclick("course");
+                saveBtnOnclick("course", 1);
             }}
             >Save</Button></TabPane>
             <TabPane tab="Group panel" key="3"> <Table dataSource={data} columns={columns}/><Button type="primary" block onClick={() =>{
-                saveBtnOnclick("group");
+                saveBtnOnclick("group", 2);
             }}
             >Save</Button></TabPane>
         </Tabs>
