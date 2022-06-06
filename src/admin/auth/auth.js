@@ -31,6 +31,7 @@ function Auth() {
             if (res.data.statusCode === 200) {
                 localStorage.setItem("accessToken", res.data.accessToken)
                 localStorage.setItem("refreshToken", res.data.refreshToken);
+
             }
         })
     }

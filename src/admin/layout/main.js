@@ -29,11 +29,6 @@ const MainLayout = () => {
                     defaultSelectedKeys={['1']}
                     items={[
                         {
-                            key: '1',
-                            icon: <Link to={"/admin/user"}><UserOutlined/></Link>,
-                            label: 'user',
-                        },
-                        {
                             key: '2',
                             icon: <Link to={"/admin/course"}><VideoCameraOutlined/></Link>,
                             label: 'course',

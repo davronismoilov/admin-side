@@ -1,12 +1,8 @@
-import React, {useState} from 'react';
-import { Tabs, Table, Radio, Divider, Switch, Button  } from 'antd';
-const { TabPane } = Tabs;
+import React, {useEffect, useState} from 'react';
+import {Tabs, Table, Switch, Button, Checkbox} from 'antd';
+import axios from "axios";
 
-const onChange = (key) => {
-    console.log(key);
-};
-
-const SwitchButton = () => <Switch defaultUnChecked onChange={onChange} />;
+const {TabPane} = Tabs;
 
 
 const columns = [
@@ -15,7 +11,7 @@ const columns = [
         dataIndex: 'role',
     },
     {
-        title: 'Panel visibility',
+        title: 'Visibility',
         dataIndex: 'visibility',
     },
     {
@@ -31,73 +27,110 @@ const columns = [
         dataIndex: 'delete',
     },
 ];
-const data = [];
 
-for (let i = 0; i < 46; i++) {
-    data.push({
-        role: `Edward King ${i}`,
-        visibility: SwitchButton(),
-        address: `London, Park Lane no. ${i}`,
-    });
+
+    // const SaveButton = () => <Button type="primary" block>Save</Button>
+
+
+
+const MainSettings = () => {
+    const [switchBtnStatus, setSwitchBtnStatus] = useState([false, false, false]);
+    const [checkboxBtnStatusInfo, setCheckboxBtnStatusInfo] = useState([false, false, false]);
+    const [checkboxBtnStatusEdit, setCheckboxBtnStatusEdit] = useState([false, false, false]);
+    const [checkboxBtnStatusDelete, setCheckboxBtnStatusDelete] = useState([false, false, false]);
+    const [data, setData] = useState([]);
+    let [permissions, setPermissions] = useState({name:"", permissions:[{role: "", list:[]}]});
+
+    const switchBtnOnChange = (id) => {
+        console.log(id);
+        switchBtnStatus[id] = !switchBtnStatus[id];
+        setSwitchBtnStatus(switchBtnStatus);
+        console.log(switchBtnStatus);
+    }
+
+
+    const onChange = (ind, btn) => {
+        switch (btn){
+            case "info" :
+                checkboxBtnStatusInfo[ind] = !checkboxBtnStatusInfo[ind];
+                setCheckboxBtnStatusInfo(checkboxBtnStatusInfo);
+                break;
+            case "edit" :
+                checkboxBtnStatusEdit[ind] = !checkboxBtnStatusEdit[ind];
+                setCheckboxBtnStatusEdit(checkboxBtnStatusEdit);
+                break;
+            default :
+                checkboxBtnStatusDelete[ind] = !checkboxBtnStatusDelete[ind];
+                setCheckboxBtnStatusDelete(checkboxBtnStatusDelete);
+        }
+    };
+
+
+    function updateDate() {
+        let arr = [];
+        for (let i = 0; i < 3; i++) {
+            arr.push({
+                key: i,
+                role: `USER_ROLE`,
+                visibility: <Switch onChange={() => {
+                    switchBtnOnChange(i)
+                }}/>,
+                info: switchBtnStatus[i] ? <Checkbox onChange={() => onChange(i, "info")}/> : <Checkbox disabled/>,
+                edit: switchBtnStatus[i] ? <Checkbox onChange={() => onChange(i, "edit")}/> : <Checkbox disabled/>,
+                delete: switchBtnStatus[i] ? <Checkbox onChange={() => onChange(i, "delete")}/> : <Checkbox disabled/>,
+            });
+        }
+        return arr;
+    }
+
+    useEffect(() => {
+        setData(updateDate())
+    })
+
+    function saveBtnOnclick(panelName){
+        permissions = {
+            name: panelName,
+            permissions: [
+                {
+                  role: "ROLE_USER",
+                  list: [checkboxBtnStatusInfo[0], checkboxBtnStatusEdit[0], checkboxBtnStatusDelete[0]],
+                },
+                {
+                    role: "ROLE_ADMIN",
+                    list: [checkboxBtnStatusInfo[1], checkboxBtnStatusEdit[1], checkboxBtnStatusDelete[1]],
+                },
+                {
+                    role: "ROLE_SUPER_ADMIN",
+                    list: [checkboxBtnStatusInfo[2], checkboxBtnStatusEdit[2], checkboxBtnStatusDelete[2]],
+                },
+            ]
+        }
+
+        setPermissions(permissions);
+
+        console.log(permissions);
+        // axios.post("http://localhost:8080/api/v1/permission", permissions).then(res => {
+        //     console.log(res);
+        // })
+    }
+
+
+    return (
+        <Tabs onChange={onChange} type="card">
+            <TabPane tab="User panel" key="1"> <Table dataSource={data} columns={columns}/>
+                <Button type="primary" block onClick={() =>{
+                    saveBtnOnclick("user");
+                }}>Save</Button></TabPane>
+            <TabPane tab="Course panel" key="2"> <Table dataSource={data} columns={columns}/><Button type="primary"  block onClick={() =>{
+                saveBtnOnclick("course");
+            }}
+            >Save</Button></TabPane>
+            <TabPane tab="Group panel" key="3"> <Table dataSource={data} columns={columns}/><Button type="primary" block onClick={() =>{
+                saveBtnOnclick("group");
+            }}
+            >Save</Button></TabPane>
+        </Tabs>
+    );
 }
-
-// const switch = () => <Switch defaultChecked onChange={onChange} />;
-
-
-let DrawTable = () => {
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-    const [loading, setLoading] = useState(false);
-
-    const start = () => {
-        setLoading(true); // ajax request after empty completing
-
-        setTimeout(() => {
-            setSelectedRowKeys([]);
-            setLoading(false);
-        }, 1000);
-    };
-
-    const onSelectChange = (newSelectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
-        setSelectedRowKeys(newSelectedRowKeys);
-    };
-
-    const rowSelection = {
-        selectedRowKeys,
-        onChange: onSelectChange,
-    };
-    const hasSelected = selectedRowKeys.length > 0;
-        return (
-            <div>
-        {/*        <div*/}
-        {/*            style={{*/}
-        {/*                marginBottom: 16,*/}
-        {/*            }}>*/}
-        {/*            <span*/}
-        {/*                style={{*/}
-        {/*                    marginLeft: 8,*/}
-        {/*                }}*/}
-        {/*            >*/}
-        {/*  {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}*/}
-        {/*</span>*/}
-        {/*        </div>*/}
-                <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
-            </div>
-        );
-}
-
-const MainSettings = () => (
-    <Tabs onChange={onChange} type="card">
-        <TabPane tab="User panel" key="1">
-            {DrawTable()};
-        </TabPane>
-        <TabPane tab="Course panel" key="2">
-            {DrawTable()};
-        </TabPane>
-        <TabPane tab="Group panel" key="3">
-            {DrawTable()};
-        </TabPane>
-    </Tabs>
-);
 
 export default MainSettings;
