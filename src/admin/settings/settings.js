@@ -72,9 +72,7 @@ const MainSettings = () => {
                 arr.push({
                     key: i,
                     role: `USER_ROLE`,
-                    visibility: <Switch onChange={() => {
-                        switchBtnOnChange(i)
-                    }}/>,
+                    visibility: <Switch onChange={switchBtnOnChange}/>,
                     info: switchBtnStatus[i] ? <Checkbox onChange={() => onChange(i, "info")}/> : <Checkbox disabled/>,
                     edit: switchBtnStatus[i] ? <Checkbox onChange={() => onChange(i, "edit")}/> : <Checkbox disabled/>,
                     delete: switchBtnStatus[i] ? <Checkbox onChange={() => onChange(i, "delete")}/> : <Checkbox disabled/>,
