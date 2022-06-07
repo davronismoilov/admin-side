@@ -66,22 +66,22 @@ const MainSettings = () => {
     };
 
 
-    function updateDate() {
-        let arr = [];
-        for (let i = 0; i < 3; i++) {
-            arr.push({
-                key: i,
-                role: `USER_ROLE`,
-                visibility: <Switch onChange={() => {
-                    switchBtnOnChange(i)
-                }}/>,
-                info: switchBtnStatus[i] ? <Checkbox onChange={() => onChange(i, "info")}/> : <Checkbox disabled/>,
-                edit: switchBtnStatus[i] ? <Checkbox onChange={() => onChange(i, "edit")}/> : <Checkbox disabled/>,
-                delete: switchBtnStatus[i] ? <Checkbox onChange={() => onChange(i, "delete")}/> : <Checkbox disabled/>,
-            });
+        function updateDate() {
+            let arr = [];
+            for (let i = 0; i < 3; i++) {
+                arr.push({
+                    key: i,
+                    role: `USER_ROLE`,
+                    visibility: <Switch onChange={() => {
+                        switchBtnOnChange(i)
+                    }}/>,
+                    info: switchBtnStatus[i] ? <Checkbox onChange={() => onChange(i, "info")}/> : <Checkbox disabled/>,
+                    edit: switchBtnStatus[i] ? <Checkbox onChange={() => onChange(i, "edit")}/> : <Checkbox disabled/>,
+                    delete: switchBtnStatus[i] ? <Checkbox onChange={() => onChange(i, "delete")}/> : <Checkbox disabled/>,
+                });
+            }
+            return arr;
         }
-        return arr;
-    }
 
     useEffect(() => {
         setData(updateDate())

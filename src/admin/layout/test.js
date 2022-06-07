@@ -14,7 +14,8 @@ import './test.css'
 import {Link, Route, Routes} from "react-router-dom";
 import User from "../user/user";
 import Course from "../course/course";
-import MainSettings from "../settings/settings";
+import Panel from "../settings/Panel";
+import Permissions from "../settings/Permissions";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -83,9 +84,9 @@ const Test = () => {
                     <Routes>
                         <Route exact={true} path={"/admin/user"} element={<User/>}/>
                         <Route exact={true} path={"/admin/course"} element={<Course/>}/>
-                        <Route exact={true} path={"/admin/groups"} element={<MainSettings/>}/>
-                        <Route exact={true} path={"/admin/permissions"} element={<MainSettings/>}/>
-                        <Route exact={true} path={"/admin/profile"} element={<MainSettings/>}/>
+                        {/*<Route exact={true} path={"/admin/groups"} element={<MainSettings/>}/>*/}
+                        <Route exact={true} path={"/admin/permissions"} element={<Panel/>}/>
+                        <Route exact={true} path={"/admin/profile"} element={<Permissions/>}/>
                     </Routes>
 
 
