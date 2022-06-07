@@ -68,7 +68,7 @@ const Permissions = (props) => {
             }
         ]
     })
-    const [arr, setArr] = useState([]);
+    const [arr, setArr] = useState([data.content]);
 
     const switchBtnOnChange = (id) => {
         switchStatus[id] = !switchStatus[id];
@@ -79,32 +79,55 @@ const Permissions = (props) => {
 
     }
 
-    function updateDate() {
-        if(data && data.content) {
-            data.content.map((el, i) => {
-                arr.push({
-                    key: i,
-                    role: el.roleName,
-                    visibility: <Switch onChange={() => {
-                        switchBtnOnChange(i)
-                    }}/>,
-                    update: <Checkbox disabled={!switchStatus[i]} defaultChecked={el.permissions.update}/>,
-                    delete: <Checkbox disabled={!switchStatus[i]} defaultChecked={el.permissions.delete}/>,
-                    info: <Checkbox disabled={!switchStatus[i]} defaultChecked={el.permissions.info}/>,
-                });
-                 setArr(arr);
-            });
-        }
+    function updateData() {
+
+        let rowTable = [];
+        data.content.map((el, ind) => {
+            rowTable.push({
+                key: ind,
+                role: el.roleName,
+                visibility: el.permissions.visibility,
+                update: el.permissions.update,
+                delete: el.permissions.delete,
+                info: el.permissions.info
+            })
+        })
+        return rowTable;
     }
 
     useEffect(() => {
-        setArr(updateDate);
-    })
+        setArr(updateData);
+    }, [])
 
     return (
         <Tabs onChange={onChange} type="card" key={data.sectionName}>
             <TabPane tab={data.sectionName}  key="1">
-                <Table dataSource={arr} columns={columns}/>
+
+                <table className={"table"}>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>role</th>
+                        <th>visibility</th>
+                        <th>update</th>
+                        <th>delete</th>
+                        <th>info</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {arr.map((perm, cnt) => {
+                        return <tr key={perm.key}>
+                            <td>{perm.role}</td>
+                            <td><Switch onChange={() => {
+                                switchBtnOnChange(cnt)
+                            }}/></td>
+                            <td><Checkbox disabled={!switchStatus[cnt]} defaultChecked={perm.update} /></td>
+                            <td><Checkbox disabled={!switchStatus[cnt]} defaultChecked={perm.delete} /></td>
+                            <td><Checkbox disabled={!switchStatus[cnt]} defaultChecked={perm.info} /></td>
+                        </tr>
+                    })}
+                    </tbody>
+                </table>
             </TabPane>
         </Tabs>
     );
