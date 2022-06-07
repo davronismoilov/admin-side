@@ -14,7 +14,7 @@ import './test.css'
 import {Link, Route, Routes} from "react-router-dom";
 import User from "../user/user";
 import Course from "../course/course";
-import Panel from "../settings/Panel";
+import Section from "../settings/Section";
 import Permissions from "../settings/Permissions";
 
 const {Header, Content, Footer, Sider} = Layout;
@@ -71,22 +71,12 @@ const Test = () => {
                     >
 
                     </Breadcrumb>
-                    {/*<div*/}
-                    {/*    className="site-layout-background"*/}
-                    {/*    style={{*/}
-                    {/*        padding: 24,*/}
-                    {/*        minHeight: 360,*/}
-                    {/*    }}*/}
-                    {/*>*/}
-                    {/*    Bill is a cat.*/}
-                    {/*</div>*/}
 
                     <Routes>
                         <Route exact={true} path={"/admin/user"} element={<User/>}/>
                         <Route exact={true} path={"/admin/course"} element={<Course/>}/>
-                        {/*<Route exact={true} path={"/admin/groups"} element={<MainSettings/>}/>*/}
-                        <Route exact={true} path={"/admin/permissions"} element={<Panel/>}/>
-                        <Route exact={true} path={"/admin/profile"} element={<Permissions/>}/>
+                        <Route exact={true} path={"/admin/permissions"} element={<Permissions/>}/>
+                        {/*<Route exact={true} path={"/admin/profile"} element={<Permissions/>}/>*/}
                     </Routes>
 
 

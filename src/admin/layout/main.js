@@ -12,7 +12,7 @@ import './main.css';
 import {Link, Route, Routes} from "react-router-dom";
 import User from "../user/user";
 import Course from "../course/course";
-import MainSettings from "../settings/settings";
+import Test from "./test";
 
 const {Header, Sider, Content} = Layout;
 
@@ -80,7 +80,7 @@ const MainLayout = () => {
                     <Routes>
                         <Route exact={true} path={"/admin/user"} element={<User/>}/>
                         <Route exact={true} path={"/admin/course"} element={<Course/>}/>
-                        <Route exact={true} path={"/admin/settings"} element={<MainSettings/>}/>
+                        <Route exact={true} path={"/admin/settings"} element={<Test/>}/>
                     </Routes>
 
                 </Content>
