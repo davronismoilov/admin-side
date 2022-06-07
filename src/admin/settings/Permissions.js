@@ -1,58 +1,75 @@
-import {Checkbox, Switch, Tabs} from "antd";
+import {Button, Checkbox, Switch, Tabs} from "antd";
 import React, {useEffect, useState} from "react";
+import axios from "axios";
 
 const {TabPane} = Tabs;
 
-
+const URI = "localhost";
 
 const Permissions = (props) => {
     const [switchStatus, setSwitchStatus] = useState([false, false, false]);
-    const [data, setData] = useState({
-        sectionName: "A",
-        content: [
-            {
-                roleName: "ROLE_USER",
-                permissions: {
-                    visibility: true,
-                    update: false,
-                    delete: false,
-                    info: false
-                }
-            },
-            {
-                roleName: "ROLE_ADMIN",
-                permissions: {
-                    visibility: true,
-                    update: true,
-                    delete: false,
-                    info: false
-                }
-            },
-            {
-                roleName: "ROLE_SUPER",
-                permissions: {
-                    visibility: true,
-                    update: true,
-                    delete: true,
-                    info: true
-                }
+
+    const [data, setData] = useState(
+        {
+            "data": {
+                "id": 2,
+                "sectionName": "queue",
+                "content": [
+                    {
+                        "ordinal": 0,
+                        "roleName": "ROLE_USER",
+                        "permissions": {
+                            "visibility": false,
+                            "update": true,
+                            "delete": false,
+                            "info": false
+                        }
+                    },
+                    {
+                        "ordinal": 1,
+                        "roleName": "ROLE_ADMIN",
+                        "permissions": {
+                            "visibility": false,
+                            "update": true,
+                            "delete": false,
+                            "info": true
+                        }
+                    },
+                    {
+                        "ordinal": 2,
+                        "roleName": "ROLE_OWNER",
+                        "permissions": {
+                            "visibility": true,
+                            "update": true,
+                            "delete": true,
+                            "info": true
+                        }
+                    }
+                ]
             }
-        ]
-    })
-    const [arr, setArr] = useState([data.content]);
+        })
 
     const switchBtnOnChange = (id) => {
         switchStatus[id] = !switchStatus[id];
         setSwitchStatus([...switchStatus]);
+        data.content[id].permissions.visibility = switchStatus[id];
     }
 
-    const onChange = () => {
+    const saveBtnOnclick = () => {
+        axios.post(URI, data).then(r => {
+                console.log(r.status)
+            }
+        )
+    }
 
+    const handleChange = (ordinal, key) => {
+        data.content[ordinal].permissions[key] = !data.content[ordinal].permissions[key];
+        setData({...data});
     }
 
     return (
-        <Tabs onChange={onChange} type="card" key={data.sectionName}>
-            <TabPane tab={data.sectionName}  key="1">
+        <Tabs type="card" key={data.sectionName}>
+            <TabPane tab={data.sectionName} key="1">
 
                 <table className={"table"}>
                     <thead>
@@ -66,17 +83,27 @@ const Permissions = (props) => {
                     </tr>
                     </thead>
                     <tbody>
-                    {data.content.map((perm, cnt) => {
+                    {data.content.map((perm, i) => {
                         return <tr key={perm.key}>
                             <td>{perm.roleName}</td>
                             <td><Switch onChange={() => {
-                                switchBtnOnChange(cnt)
+                                switchBtnOnChange(perm.permissions.ordinal)
                             }}/></td>
-                            <td><Checkbox disabled={!switchStatus[cnt]} defaultChecked={perm.permissions.update} /></td>
-                            <td><Checkbox disabled={!switchStatus[cnt]} defaultChecked={perm.permissions.delete} /></td>
-                            <td><Checkbox disabled={!switchStatus[cnt]} defaultChecked={perm.permissions.info} /></td>
+                            <td><Checkbox disabled={!switchStatus[perm.permissions.ordinal]}
+                                          defaultChecked={perm.permissions.delete} onChange={() => {
+                                handleChange(perm.permissions.ordinal, "update")
+                            }}/></td>
+                            <td><Checkbox disabled={!switchStatus[perm.permissions.ordinal]}
+                                          defaultChecked={perm.permissions.update} onChange={() => {
+                                handleChange(perm.permissions.ordinal, "delete")
+                            }}/></td>
+                            <td><Checkbox disabled={!switchStatus[perm.permissions.ordinal]}
+                                          defaultChecked={perm.permissions.info} onChange={() => {
+                                handleChange(perm.permissions.ordinal, "info")
+                            }}/></td>
                         </tr>
                     })}
+                    <Button type="primary" block onClick={saveBtnOnclick}> Save</Button>
                     </tbody>
                 </table>
             </TabPane>
