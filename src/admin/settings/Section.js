@@ -11,11 +11,11 @@ const Section = () => {
     const [sectionList, setSectionList] = useState([]);
     const [data, setData] = useState({});
 
-    axios.get(URL_FOR_GET_SECTION).then(res => {
+    axios.get(URL_FOR_GET_SECTION, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
         if (res.data.statusCode === 200) {
             setSectionList(res.data.data);
             const URL_FOR_GET_FIRST_SECTION_DATA = `${URL_FOR_GET_SECTION}/${sectionList[0].id}`;
-            axios.get(URL_FOR_GET_FIRST_SECTION_DATA).then(res => {
+            axios.get(URL_FOR_GET_FIRST_SECTION_DATA, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
                 if (res.data.statusCode === 200) {
                     setData(res.data.data);
                 }
@@ -25,7 +25,7 @@ const Section = () => {
 
     const onChange = (id) => {
         //get single section by id
-        axios.get(`${URL_FOR_GET_SECTION}/${id}`).then(res => {
+        axios.get(`${URL_FOR_GET_SECTION}/${id}`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
             if (res.data.statusCode === 200) {
                 setData(res.data.data);
             }

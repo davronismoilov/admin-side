@@ -4,7 +4,7 @@ import Test from "./admin/layout/test";
 const App = () => {
     return <div>
         {/*<MainLayout/>*/}
-        <Test/>
+        <Test   />
     </div>
 }
 export default App;
