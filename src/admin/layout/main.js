@@ -16,6 +16,7 @@ import User from "../user/user";
 import Course from "../course/course";
 import axios from "axios";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {Footer} from "antd/es/layout/layout";
 
 const {Header, Sider, Content} = Layout;
 
@@ -98,7 +99,7 @@ const MainLayout = () => {
           <header>
             <div className="container">
               <ul>
-                <li>{(username== "")?<span>User</span>:{username}}</li>
+                <li>{(username == "") ? <span>User</span> : {username}}</li>
                 <li>{
                   (pictureUrl == "") ? <img src="/images.png" alt="Avatar" className="avatar"/> :
                     <img src={pictureUrl} alt="Avatar" className="avatar"/>}</li>
@@ -127,8 +128,16 @@ const MainLayout = () => {
           </Routes>
 
         </Content>
+        <Footer style={
+          {
+            textAlign: 'center',
+            fontFamily: "monospace"
+          }
+        }>Oliy-Mahad ©2022 Created by PDP/B1</Footer>
       </Layout>
+
     </Layout>
+
   );
 };
 
