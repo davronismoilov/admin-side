@@ -1,6 +1,7 @@
 import React, {useReducer, useState} from 'react';
 import './auth.css';
 import axios from "axios";
+import '../layout/main'
 
 
 const reducer = (state, action) => {
@@ -31,6 +32,8 @@ function Auth() {
             if (res.data.statusCode === 200) {
                 localStorage.setItem("accessToken", res.data.accessToken)
                 localStorage.setItem("refreshToken", res.data.refreshToken);
+                localStorage.setItem("phoneNumber", phoneNumber)
+                this.main.getUser(auth.phoneNumber)
             }
         })
     }
