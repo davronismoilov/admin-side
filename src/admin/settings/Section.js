@@ -5,16 +5,12 @@ import Permissions from "./Permissions";
 
 const {TabPane} = Tabs;
 
-const URL_FOR_GET_SECTION = "http://localhost:8080/api/v1/section/get";
+const URL_FOR_GET_SECTION = "http://localhost:9000/api/v1/section/get";
 
 const Section = () => {
     const [sectionList, setSectionList] = useState([]);
-    // let list = [];
-    const [data, setData] = useState({});
+    const [data, setData] = useState({ content: [] });
 
-    const handleData = (data) => {
-        setData(data);
-    }
 
     useEffect(function () {
         axios.get(URL_FOR_GET_SECTION, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
@@ -24,11 +20,8 @@ const Section = () => {
                     headers:
                         {Authorization: localStorage.getItem("accessToken")}
                 }).then(res => {
-                    console.log("before success", res.data.data);
                     if (res.data.statusCode === 200) {
-                        console.log("before set", res.data.data);
-                        handleData(res.data.data);
-                        console.log("after set", data);
+                        setData(res.data.data);
                     }
                 })
             }
@@ -36,9 +29,10 @@ const Section = () => {
     }, [])
 
     const onChange = (id) => {
-        //get single section by id
+        console.log("on")
         axios.get(`${URL_FOR_GET_SECTION}/${id}`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
             if (res.data.statusCode === 200) {
+                console.log(res.data);
                 setData(res.data.data);
             }
         });
@@ -47,8 +41,6 @@ const Section = () => {
     return (
         <Tabs type="card">
             {sectionList.map((section) => {
-                console.log("section", section);
-                console.log("data", data);
                 return <TabPane tab={section.name} key={section.id} onClick={() => onChange(section.id)}>
                     <Permissions data={data}/>
                 </TabPane>
