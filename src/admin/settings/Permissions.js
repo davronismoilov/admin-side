@@ -6,51 +6,14 @@ const {TabPane} = Tabs;
 
 const URL_FOR_POST_PERMISSION = "http://localhost:8080/api/v1/section/edit";
 
-const Permissions = () => {
+const Permissions = (props) => {
     const [switchStatus, setSwitchStatus] = useState([false, false, false]);
     // const [data, setData] = useState();
-    // console.log(data);
+    console.log(props);
     // TODO data SHOULD BE TAKEN FROM props
-    const [data, setData] = useState(
-        {
-            "data": {
-                "id": 2,
-                "sectionName": "queue",
-                "content": [
-                    {
-                        "ordinal": 0,
-                        "roleName": "ROLE_USER",
-                        "permissions": {
-                            "visibility": false,
-                            "update": true,
-                            "delete": false,
-                            "info": false
-                        }
-                    },
-                    {
-                        "ordinal": 1,
-                        "roleName": "ROLE_ADMIN",
-                        "permissions": {
-                            "visibility": false,
-                            "update": true,
-                            "delete": false,
-                            "info": true
-                        }
-                    },
-                    {
-                        "ordinal": 2,
-                        "roleName": "ROLE_OWNER",
-                        "permissions": {
-                            "visibility": true,
-                            "update": true,
-                            "delete": true,
-                            "info": true
-                        }
-                    }
-                ]
-            }
-        })
+    const [data, setData] = useState(props.data);
 
+    console.log(data);
 
     const switchBtnOnChange = (id) => {
         switchStatus[id] = !switchStatus[id];
@@ -73,8 +36,8 @@ const Permissions = () => {
     }
 
     return (
-        <Tabs type="card" key={data.data.sectionName}>
-            <TabPane tab={data.data.sectionName} key="1">
+        <Tabs type="card" key={data.sectionName}>
+            <TabPane tab={data.sectionName} key="1">
 
                 <table className={"table"}>
                     <thead>
@@ -87,7 +50,7 @@ const Permissions = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {data.data.content.map((perm, i) => {
+                    {data.content.map((perm, i) => {
                         return <tr key={perm.ordinal}>
                             <td>{perm.roleName}</td>
                             <td><Switch onChange={() => {
