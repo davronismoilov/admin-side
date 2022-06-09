@@ -16,7 +16,6 @@ const reducer = (state, action) => {
 
 function Auth() {
     const [auth, dispatch] = useReducer(reducer, {phoneNumber: "", password: ""});
-    const [success, setSuccess] = useState(false);
 
     function handleInputChange(e) {
         dispatch({
@@ -36,7 +35,7 @@ function Auth() {
     }
 
     return <div>
-         <div className="container">
+        <div className="container">
             <div className="screen">
                 <div className="screen__content">
                     <div className="login">
@@ -44,7 +43,7 @@ function Auth() {
                             <i className="login__icon fas fa-user"/>
                             <input type="text" name="phoneNumber" className="login__input"
                                    placeholder="User name / Email"
-                                       onChange={handleInputChange}/>
+                                   onChange={handleInputChange}/>
                         </div>
                         <div className="login__field">
                             <i className="login__icon fas fa-lock"/>
@@ -65,6 +64,5 @@ function Auth() {
             </div>
         </div>
     </div>
-};
-
+}
 export default Auth;

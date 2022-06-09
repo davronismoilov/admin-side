@@ -75,7 +75,7 @@ const Test = () => {
                     <Routes>
                         <Route exact={true} path={"/admin/user"} element={<User/>}/>
                         <Route exact={true} path={"/admin/course"} element={<Course/>}/>
-                        <Route exact={true} path={"/admin/permissions"} element={<Permissions/>}/>
+                        <Route exact={true} path={"/admin/permissions"} element={<Section/>}/>
                         {/*<Route exact={true} path={"/admin/profile"} element={<Permissions/>}/>*/}
                     </Routes>
 

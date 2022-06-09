@@ -4,12 +4,13 @@ import axios from "axios";
 
 const {TabPane} = Tabs;
 
-const URL_FOR_POST_PERMISSION = "http://localhost:9000/api/v1/section/edit";
+const URL_FOR_POST_PERMISSION = "http://localhost:8080/api/v1/section/edit";
 
-const Permissions = (props) => {
+const Permissions = () => {
     const [switchStatus, setSwitchStatus] = useState([false, false, false]);
-
-    //TODO data SHOULD BE TAKEN FROM props
+    // const [data, setData] = useState();
+    // console.log(data);
+    // TODO data SHOULD BE TAKEN FROM props
     const [data, setData] = useState(
         {
             "data": {
@@ -93,11 +94,11 @@ const Permissions = (props) => {
                                 switchBtnOnChange(perm.ordinal)
                             }}/></td>
                             <td><Checkbox disabled={!switchStatus[perm.ordinal]}
-                                          defaultChecked={perm.permissions.delete} onChange={() => {
+                                          defaultChecked={perm.permissions.update} onChange={() => {
                                 handleChange(perm.ordinal, "update")
                             }}/></td>
                             <td><Checkbox disabled={!switchStatus[perm.ordinal]}
-                                          defaultChecked={perm.permissions.update} onChange={() => {
+                                          defaultChecked={perm.permissions.delete} onChange={() => {
                                 handleChange(perm.ordinal, "delete")
                             }}/></td>
                             <td><Checkbox disabled={!switchStatus[perm.ordinal]}

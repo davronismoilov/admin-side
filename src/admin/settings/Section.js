@@ -5,7 +5,7 @@ import Permissions from "./Permissions";
 
 const {TabPane} = Tabs;
 
-const URL_FOR_GET_SECTION = "http://localhost:9000/api/v1/section/get";
+const URL_FOR_GET_SECTION = "http://localhost:8080/api/v1/section/get";
 
 const Section = () => {
     const [sectionList, setSectionList] = useState([]);
@@ -36,7 +36,7 @@ const Section = () => {
         <Tabs type="card">
             {sectionList.map((section) => {
                 return <TabPane tab={section.name} key={section.id} onClick={() => onChange(section.id)}>
-                    <Permissions data={data}/>
+                    {/*<Permissions data={data}/>*/}
                 </TabPane>
             })
             }
