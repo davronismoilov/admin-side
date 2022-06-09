@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Table, Tabs} from "antd";
 import Permissions from "./Permissions";
 
@@ -11,17 +11,21 @@ const Section = () => {
     const [sectionList, setSectionList] = useState([]);
     const [data, setData] = useState({});
 
-    axios.get(URL_FOR_GET_SECTION, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
-        if (res.data.statusCode === 200) {
-            setSectionList(res.data.data);
-            const URL_FOR_GET_FIRST_SECTION_DATA = `${URL_FOR_GET_SECTION}/${sectionList[0].id}`;
-            axios.get(URL_FOR_GET_FIRST_SECTION_DATA, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
-                if (res.data.statusCode === 200) {
-                    setData(res.data.data);
-                }
-            })
-        }
-    });
+    console.log(localStorage.getItem("accessToken"));
+    useEffect(function(){
+        axios.get(URL_FOR_GET_SECTION, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
+            if (res.data.statusCode === 200) {
+                setSectionList(res.data.data);
+                const URL_FOR_GET_FIRST_SECTION_DATA = `${URL_FOR_GET_SECTION}/${sectionList[0].id}`;
+                axios.get(URL_FOR_GET_FIRST_SECTION_DATA, {headers:
+                        {Authorization: localStorage.getItem("accessToken")}}).then(res => {
+                    if (res.data.statusCode === 200) {
+                        setData(res.data.data);
+                    }
+                })
+            }
+        });
+    }, [])
 
     const onChange = (id) => {
         //get single section by id
