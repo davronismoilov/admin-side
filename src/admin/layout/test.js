@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Navigate} from 'react-router-dom';
 import {Breadcrumb, Layout, Menu} from 'antd';
 import {
     FileOutlined,
@@ -11,7 +12,7 @@ import {
     DingdingOutlined
 } from '@ant-design/icons';
 import './test.css'
-import {Link, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
 import User from "../user/user";
 import Course from "../course/course";
 import Section from "../settings/Section";
@@ -32,10 +33,10 @@ const items = [
 
     getItem('User', 'sub1', <Link to={"/admin/user"}><UserOutlined/></Link>),
     getItem('Course', 'sub2', <Link to={"/admin/course"}><TeamOutlined/></Link>),
-    getItem('Groups', '8',  <Link to={"/admin/groups"}><FileOutlined/></Link>),
+    getItem('Groups', '8', <Link to={"/admin/groups"}><FileOutlined/></Link>),
     getItem('Settings', '9', <SettingOutlined/>, [
         getItem('Profile', '100', <Link to={"/admin/profile"}><UserSwitchOutlined/></Link>),
-        getItem('Permissions', '101',<Link to={"/admin/permissions"}><SafetyCertificateOutlined/></Link> ),
+        getItem('Permissions', '101', <Navigate to={"/dashboard/admin/permissions"}><SafetyCertificateOutlined/></Navigate>),
         getItem('Logout', '102', <Link to={"/admin/logout"}><LogoutOutlined/></Link>),
     ]),
 ];
@@ -59,27 +60,12 @@ const Test = () => {
                         padding: 0,
                     }}
                 />
-                <Content
-                    style={{
-                        // margin: '0 16px',
-                    }}
-                >
-                    <Breadcrumb
-                        style={{
-                            // margin: '16px 0',
-                        }}
-                    >
-
-                    </Breadcrumb>
-
+                <Content>
                     <Routes>
                         <Route exact={true} path={"/admin/user"} element={<User/>}/>
                         <Route exact={true} path={"/admin/course"} element={<Course/>}/>
                         <Route exact={true} path={"/admin/permissions"} element={<Section/>}/>
-                        {/*<Route exact={true} path={"/admin/profile"} element={<Permissions/>}/>*/}
                     </Routes>
-
-
                 </Content>
                 <Footer
                     style={{

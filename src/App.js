@@ -1,11 +1,12 @@
-import MainLayout from "./admin/layout/main";
-import {Route, Routes} from "react-router-dom";
-import Auth from "./admin/auth/auth";
+import React from "react";
 
-const App = () => {
-    return <Routes>
-            <Route exact={true} path={"/"} element={<Auth/>}/>
-            <Route exact={true} path={"/admin"} element={<MainLayout/>}/>
-        </Routes>
+// routes
+import Router from './routes';
+
+// ----------------------------------------------------------------------
+
+export default function App() {
+    return (
+        <Router/>
+    );
 }
-export default App;

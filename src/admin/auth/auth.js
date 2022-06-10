@@ -1,6 +1,7 @@
 import React, {useReducer, useState} from 'react';
 import './auth.css';
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 
 const reducer = (state, action) => {
@@ -15,6 +16,7 @@ const reducer = (state, action) => {
 };
 
 function Auth() {
+    const navigate = useNavigate()
     const [auth, dispatch] = useReducer(reducer, {phoneNumber: "", password: ""});
 
     function handleInputChange(e) {
@@ -29,6 +31,7 @@ function Auth() {
             if (res.data.statusCode === 200) {
                 localStorage.setItem("accessToken", res.data.accessToken)
                 localStorage.setItem("refreshToken", res.data.refreshToken);
+                navigate("/dashboard/admin")
             }
         })
     }

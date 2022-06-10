@@ -9,7 +9,7 @@ const {TabPane} = Tabs;
 const URL_FOR_GET_SECTION = "http://localhost:9000/api/v1/section/get";
 const URL_FOR_POST_PERMISSION = "http://localhost:9000/api/v1/section/edit";
 const Section = () => {
-
+    console.log("Section")
     const [sectionList, setSectionList] = useState([]);
     const [data, setData] = useState({content:[]});
     const [switchStatus, setSwitchStatus] = useState([false, false, false]);
