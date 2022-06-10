@@ -14,41 +14,19 @@ import './main.css';
 import {Link, Route, Routes} from "react-router-dom";
 import User from "../user/user";
 import Course from "../course/course";
-import Profile from "../profile/profile";
+
 import axios from "axios";
 import {Footer} from "antd/es/layout/layout";
+import MyHeader from "../header/Header";
 
 const {Header, Sider, Content} = Layout;
 
 const MainLayout = () => {
 
   const [collapsed, setCollapsed] = useState(false);
-  const [pictureUrl, setPictureUrl] = useState("");
-  const [username, setUsername] = useState("")
 
 
-  useEffect(() => {
-    let phoneNumber = localStorage.getItem("phoneNumber")
-    axios.get('http://localhost:8080/api/v1/user/'+phoneNumber).then(res => {
-      setUsername(res.data.firstName)
-      setPictureUrl(res.data.imageUrl)
-      console.log(res)
-    })
 
-  });
-
-  const logout = () => {
-    localStorage.clear();
-    window.location.href = 'http://localhost:3000'
-  }
-
-  const pictureHelp = (pictureUrl) => {
-    if (pictureUrl !== "") {
-      return <img src={pictureUrl} alt="profile_pic"/>
-    } else {
-      return <img src="/images.png" alt="Avatar" className="avatar"/>
-    }
-  }
 
   return (
     <Layout>
@@ -102,21 +80,8 @@ const MainLayout = () => {
             className: 'trigger',
             onClick: () => setCollapsed(!collapsed),
           })}
-          <header>
-            <div className="container">
-              <ul>
-                <li>{(username === "") ? <span>User</span> : {username}}</li>
-                <li>{
-                  (pictureUrl === "") ? <img src="/images.png" alt="Avatar" className="avatar"/> :
-                    <img src={pictureUrl} alt="Avatar" className="avatar"/>}</li>
-                <li>
-                  <a href="#" className="btn btn-info" onClick={logout}>
-                    <span className="glyphicon glyphicon-log-out"/> Log out
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </header>
+          <MyHeader />
+
 
         </Header>
         <Content
@@ -131,7 +96,6 @@ const MainLayout = () => {
           <Routes>
             <Route exact={true} path={"/admin/user"} element={<User/>}/>
             <Route exact={true} path={"/admin/course"} element={<Course/>}/>
-            <Route exact={true} path={"/admin/profile"} element={<Profile/>}/>
           </Routes>
 
         </Content>
