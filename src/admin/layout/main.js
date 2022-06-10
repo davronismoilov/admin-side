@@ -13,6 +13,7 @@ import {Link, Route, Routes} from "react-router-dom";
 import User from "../user/user";
 import Course from "../course/course";
 import Test from "./test";
+import Section from "../settings/Section";
 
 const {Header, Sider, Content} = Layout;
 
@@ -76,12 +77,6 @@ const MainLayout = () => {
                         minHeight: 280,
                     }}
                 >
-
-                    <Routes>
-                        <Route exact={true} path={"/admin/user"} element={<User/>}/>
-                        <Route exact={true} path={"/admin/course"} element={<Course/>}/>
-                        <Route exact={true} path={"/admin/settings"} element={<Test/>}/>
-                    </Routes>
 
                 </Content>
             </Layout>

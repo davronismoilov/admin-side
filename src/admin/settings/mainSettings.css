@@ -14,3 +14,11 @@
 .site-layout-background {
     background: #fff;
 }
+ul li{
+    background-color: #1890ff;
+    color: white;
+    margin-right: 2%;
+}
+ul li button {
+ margin: 1%;
+}

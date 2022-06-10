@@ -1,10 +1,12 @@
-import MainLayout from "./admin/layout/main";
-import Test from "./admin/layout/test";
+import React from "react";
 
-const App = () => {
-    return <div>
-        {/*<MainLayout/>*/}
-        <Test   />
-    </div>
+// routes
+import Router from './routes';
+
+// ----------------------------------------------------------------------
+
+export default function App() {
+    return (
+        <Router/>
+    );
 }
-export default App;
