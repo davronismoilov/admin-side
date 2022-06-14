@@ -58,6 +58,7 @@ const Section = () => {
     }
 
     const handleChange = (ordinal, key) => {
+        console.log("onchenge:", key);
         data.content[ordinal].permissions[key] = !data.content[ordinal].permissions[key];
     }
 
@@ -91,11 +92,11 @@ const Section = () => {
                         console.log("IIIIIIIIII",perm);
                         return <tr key={perm.ordinal}>
                             <td>{perm.roleName}</td>
-                            <td><Switch defaultChecked={perm.permissions.visibility} onChange={() => {
+                            <td><Switch defaultChecked={perm.permissions.visibility} onClick={() => {
                                 switchBtnOnChange(perm.ordinal, i)
                             }}/></td>
                             <td><Checkbox disabled={!switchStatus[perm.ordinal]}
-                                          defaultChecked={perm.permissions.update} onChange={() => {
+                                          defaultChecked={perm.permissions.update} onClick={() => {
                                 handleChange(perm.ordinal, "update")
                             }}/></td>
                             <td><Checkbox disabled={!switchStatus[perm.ordinal]}
