@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {Button, Checkbox, Switch, Table, Tabs} from "antd";
-import Permissions from "./Permissions";
 import "./mainSettings.css";
 
 const {TabPane} = Tabs;
