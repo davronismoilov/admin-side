@@ -16,7 +16,7 @@ function Header() {
 
   useEffect(() => {
     let phoneNumber = localStorage.getItem("phoneNumber")
-    axios.get('http://localhost:8080/api/v1/user/' + phoneNumber).then(res => {
+    axios.get('http://localhost:9000/api/v1/user/' + phoneNumber).then(res => {
       setUsername(res.data.firstName)
       setPictureUrl(res.data.imageUrl)
       console.log(res)

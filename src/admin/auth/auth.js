@@ -27,8 +27,10 @@ function Auth() {
 
 
     function login() {
+
         axios.post("http://localhost:9000/api/v1/auth/login", auth).then((res) => {
             if (res.data.statusCode === 200) {
+              alert(false)
                 localStorage.setItem("accessToken", res.data.accessToken)
                 localStorage.setItem("refreshToken", res.data.refreshToken);
                 navigate("/dashboard/admin")
