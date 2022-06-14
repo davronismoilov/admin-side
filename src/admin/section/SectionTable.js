@@ -15,7 +15,7 @@ const SectionTable = (props) => {
                 </thead>
                 <tbody>
                 {data.body.map((el, cnt) => {
-                    return <tr key={el.id}>
+                    return <tr key={cnt}>
                         {data.headers.map((head) => {
                             return (<td>el[head]</td>)
                         })}
