@@ -3,28 +3,11 @@ import {Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, Co
 import axios from "axios";
 
 
-const CourseAddModal = ({isOpen, toggle, getSectionData, setSearch}) => {
-    const [name, setName] = useState("")
-    const [description, setDescription] = useState("")
-    const [price, setPrice] = useState("")
-    const [duration, setDuration] = useState("")
-
+const CourseAddModal = ({isOpen, toggle, getSectionData}) => {
     const [courseData, setCourseData] = useState({});
 
     function handleSubmit() {
-        // let data = {
-        //     name,
-        //     description,
-        //     price,
-        //     duration
-        // }
-
-        let data = {
-            ...courseData
-        }
-
-
-        axios.post("http://localhost:9000/api/v1/course/add", data, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
+        axios.post("http://localhost:9000/api/v1/course/add", courseData, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
             console.log(res)
             toggle()
             clearInput()
@@ -35,28 +18,8 @@ const CourseAddModal = ({isOpen, toggle, getSectionData, setSearch}) => {
     }
 
     function clearInput() {
-        // setName("")
-        // setDescription("")
-        // setPrice(0)
-        // setDuration(0)
         setCourseData({});
     }
-
-    const onSearch = (value) => {
-        setSearch(value)
-
-        axios.get(`http://localhost:9000/api/v1/course/get?name=${value}`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
-            if (res.data.status) {
-                console.log(res.data.data)
-                setCourseData([{
-                    ...res.data.data
-                }])
-            }
-        }).catch((err) => {
-            console.log(err)
-        })
-    };
-
 
     return (
         <div>
@@ -68,9 +31,10 @@ const CourseAddModal = ({isOpen, toggle, getSectionData, setSearch}) => {
                             <Label for="courseName">Name</Label>
                             <Input type="text" name="name" id="courseName" placeholder="Enter a course name"
                                    onChange={(e) => {
-                                       setName(e.target.value)
+                                       courseData.name = e.target.value;
+                                       setCourseData({...courseData})
                                    }}
-                                   value={name}
+                                   value={courseData.name}
                             />
                         </FormGroup>
                         <FormGroup>
@@ -78,9 +42,10 @@ const CourseAddModal = ({isOpen, toggle, getSectionData, setSearch}) => {
                             <Input type="textarea" name="description" id="courseDescription"
                                    placeholder="Enter a course description"
                                    onChange={(e) => {
-                                       setDescription(e.target.value)
+                                       courseData.description = e.target.value;
+                                       setCourseData({...courseData});
                                    }}
-                                   value={description}
+                                   value={courseData.description}
                             />
                         </FormGroup>
                         <FormGroup>
@@ -88,9 +53,10 @@ const CourseAddModal = ({isOpen, toggle, getSectionData, setSearch}) => {
                             <Input type="number" name="price" id="coursePrice"
                                    placeholder="Enter a course price"
                                    onChange={(e) => {
-                                       setPrice(e.target.value)
+                                       courseData.price = e.target.value;
+                                       setCourseData({...courseData});
                                    }}
-                                   value={price}
+                                   value={courseData.price}
                             />
                         </FormGroup>
                         <FormGroup>
@@ -98,9 +64,10 @@ const CourseAddModal = ({isOpen, toggle, getSectionData, setSearch}) => {
                             <Input type="number" name="duration" id="courseDuration"
                                    placeholder="Enter a course duration"
                                    onChange={(e) => {
-                                       setDuration(e.target.value)
+                                       courseData.duration = e.target.value;
+                                       setCourseData({...courseData})
                                    }}
-                                   value={duration}
+                                   value={courseData.duration}
                             />
                         </FormGroup>
                         <Col sm={{size: 8, offset: 8}}>

@@ -5,6 +5,8 @@ import axios from "axios";
 import SectionTable from "../section/SectionTable";
 import Permission from "../settings/Permission";
 import CourseAddModal from "../course/courseAddModal";
+import GroupAddModal from "../group/GroupAddModal";
+import CourseUpdateModal from "../course/courseUpdateModal";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -138,7 +140,10 @@ const Test = () => {
                     <button disabled={currentPage === page - 1} className={"btn btn-primary"}
                             onClick={() => getSectionData(1)}>next
                     </button>
-                    <CourseAddModal isOpen={modalOpen} toggle={toggle} getSectionData={getSectionData} setSearch={setSearch}/>
+                    <CourseAddModal isOpen={modalOpen} toggle={toggle} getSectionData={getSectionData} />
+                    <CourseUpdateModal isOpen={updateModalOpen} toggle={toggleUpdate} updatingModal={updatingModal}
+                                       getSectionData={getSectionData}/>
+                    <GroupAddModal isOpen={modalOpen} toggle={toggle} getSectionData={getSectionData} />
                     {/*<SectionUpdateModal isOpen={updateModalOpen} toggle={toggleUpdate} updatingModal={updatingModal}*/}
                     {/*                    getSectionData={getSectionData}/>*/}
                 </Content>

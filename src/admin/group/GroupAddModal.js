@@ -1,65 +1,40 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, Col} from 'reactstrap';
 import axios from "axios";
 
 
-const CourseUpdateModal = ({toggle, isOpen, getCourse, updatingModal}) => {
-    const [name, setName] = useState("")
-    const [description, setDescription] = useState("")
-    const [price, setPrice] = useState("")
-    const [duration, setDuration] = useState("")
+const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
+    const [courseData, setCourseData] = useState({});
 
-    function handleUpdate() {
-        let data = {
-            name,
-            description,
-            price,
-            duration
-        }
-        axios.put(`http://localhost:8081/api/course/update/${updatingModal}`, data).then((res) => {
-            if (res.data.status) {
-                console.log(res)
-                console.log("Successfully updated")
-                toggle()
-                getCourse(0)
-            }
+    function handleSubmit() {
+        axios.post("http://localhost:9000/api/v1/course/add", courseData, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
+            console.log(res)
+            toggle()
+            clearInput()
+            getSectionData(0)
         }).catch((err) => {
             console.log(err)
         })
     }
 
-    useEffect(() => {
-        getOneCourse(updatingModal);
-    }, [updatingModal])
-
-    function getOneCourse(id) {
-        axios.get(`http://localhost:8081/api/course/get/${id}`).then((res) => {
-            console.log(res.data, "Update Modal Get one course")
-            if (res.data.status) {
-                setName(res.data.data.name)
-                setDescription(res.data.data.description)
-                setDuration(res.data.data.duration)
-                setPrice(res.data.data.price)
-            }
-        }).catch((err) => {
-            console.log(err)
-        })
+    function clearInput() {
+        setCourseData({});
     }
-
 
     return (
         <div>
             <Modal isOpen={isOpen} toggle={toggle}>
-                <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+                <ModalHeader>Modal title</ModalHeader>
                 <ModalBody>
                     <Form>
                         <FormGroup>
                             <Label for="courseName">Name</Label>
                             <Input type="text" name="name" id="courseName" placeholder="Enter a course name"
                                    onChange={(e) => {
-                                       setName(e.target.value)
+                                       courseData.name = e.target.value;
+                                       setCourseData({...courseData})
                                    }}
-                                   value={name}
+                                   value={courseData.name}
                             />
                         </FormGroup>
                         <FormGroup>
@@ -67,9 +42,10 @@ const CourseUpdateModal = ({toggle, isOpen, getCourse, updatingModal}) => {
                             <Input type="textarea" name="description" id="courseDescription"
                                    placeholder="Enter a course description"
                                    onChange={(e) => {
-                                       setDescription(e.target.value)
+                                       courseData.description = e.target.value;
+                                       setCourseData({...courseData});
                                    }}
-                                   value={description}
+                                   value={courseData.description}
                             />
                         </FormGroup>
                         <FormGroup>
@@ -77,9 +53,10 @@ const CourseUpdateModal = ({toggle, isOpen, getCourse, updatingModal}) => {
                             <Input type="number" name="price" id="coursePrice"
                                    placeholder="Enter a course price"
                                    onChange={(e) => {
-                                       setPrice(e.target.value)
+                                       courseData.price = e.target.value;
+                                       setCourseData({...courseData});
                                    }}
-                                   value={price}
+                                   value={courseData.price}
                             />
                         </FormGroup>
                         <FormGroup>
@@ -87,17 +64,19 @@ const CourseUpdateModal = ({toggle, isOpen, getCourse, updatingModal}) => {
                             <Input type="number" name="duration" id="courseDuration"
                                    placeholder="Enter a course duration"
                                    onChange={(e) => {
-                                       setDuration(e.target.value)
+                                       courseData.duration = e.target.value;
+                                       setCourseData({...courseData})
                                    }}
-                                   value={duration}
+                                   value={courseData.duration}
                             />
                         </FormGroup>
                         <Col sm={{size: 8, offset: 8}}>
                             <Button color="secondary" onClick={() => {
                                 toggle();
+                                clearInput()
                             }}>Cancel</Button>
                             <Button color={"danger"} className={"float-right mx-1"}
-                                    onClick={handleUpdate}>Update</Button>
+                                    onClick={handleSubmit}>Submit</Button>
                         </Col>
                     </Form>
                 </ModalBody>
@@ -106,4 +85,4 @@ const CourseUpdateModal = ({toggle, isOpen, getCourse, updatingModal}) => {
     )
 }
 
-export default CourseUpdateModal;
+export default GroupAddModal
