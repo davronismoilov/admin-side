@@ -2,7 +2,7 @@ import {Button, Col, Row} from "reactstrap";
 import {useState} from "react";
 import Search from "antd/es/input/Search";
 
-const SectionTable = ({data, getSectionData, onSearch, toggleUpdate, deleteSectionItem, toggle}) => {
+const SectionTable = ({data, getSectionData, onSearch, toggleUpdate, deleteSectionItem, toggle, sectionName}) => {
 
     const [search, setSearch] = useState("")
 
@@ -10,9 +10,9 @@ const SectionTable = ({data, getSectionData, onSearch, toggleUpdate, deleteSecti
         <div>
             <Row>
                 <Col>
-                    <Button color="success" onClick={() => toggle()}>
-                        + Add Course
-                    </Button>
+                    {data.add && <Button color="success" onClick={() => toggle(sectionName)}>
+                        + Add {sectionName}
+                    </Button>}
                 </Col>
                 <Col sm={{size: 1, offset: 4}}>
                     {
@@ -36,7 +36,7 @@ const SectionTable = ({data, getSectionData, onSearch, toggleUpdate, deleteSecti
                 </tr>
                 </thead>
                 <tbody>
-                {data.body.map((elm, cnt) => {
+                {data.body.content.map((elm, cnt) => {
                     return <tr key={cnt}>
                         {data.headers.map(head => {
                             return (<td>{elm[head]}</td>)
@@ -47,7 +47,7 @@ const SectionTable = ({data, getSectionData, onSearch, toggleUpdate, deleteSecti
                                     Delete
                                 </Button>}
                                 {data.edit &&
-                                    <Button color="secondary" className="m-1" onClick={() => toggleUpdate(elm.id)}>
+                                    <Button color="primary" className="m-1" onClick={() => toggleUpdate(elm.id)}>
                                         Update
                                     </Button>}
                                 {data.info &&

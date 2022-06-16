@@ -48,12 +48,12 @@ const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
 
     return (
         <div>
-            <Modal isOpen={isOpen} toggle={toggle}>
+            <Modal isOpen={isOpen} toggle={() => toggle("group")}>
                 <ModalHeader>Modal title</ModalHeader>
                 <ModalBody>
                     <Form>
                         <FormGroup>
-                            <Label for="groupName">Name</Label>
+                            <Label for="groupName">Name: </Label>
                             <Input type="text" name="name" id="groupName" placeholder="Enter a group name"
                                    onChange={(e) => {
                                        groupData.name = e.target.value;
@@ -63,7 +63,7 @@ const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
                             />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="groupMemberCount">Description</Label>
+                            <Label for="groupMemberCount">Description: </Label>
                             <Input type="number" name="membersCount" id="groupMemberCount"
                                    placeholder="Enter a number of members"
                                    onChange={(e) => {
@@ -74,7 +74,7 @@ const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
                             />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="type">Gender</Label>
+                            <Label for="type">Gender: </Label>
                                 <Select
                                     defaultValue="MALE"
                                     style={{
@@ -87,18 +87,18 @@ const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
                                 </Select>
                         </FormGroup>
                         <FormGroup>
-                            <Label for="startDate">Start date</Label>
+                            <Label for="startDate">Start date: </Label>
                             <Space direction="vertical">
                                 <DatePicker onChange={handleDate} />
                             </Space>
                         </FormGroup>
 
                         <FormGroup>
-                            <Label for="courseList">courseId</Label>
+                            <Label for="courseList">Courses: </Label>
                             <Select
                                 defaultValue="Select a course"
                                 style={{
-                                    width: 120,
+                                    width: 200,
                                 }}
                                 onChange={handleCourseOption}
                             >

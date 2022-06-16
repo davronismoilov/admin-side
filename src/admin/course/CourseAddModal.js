@@ -23,12 +23,12 @@ const CourseAddModal = ({isOpen, toggle, getSectionData}) => {
 
     return (
         <div>
-            <Modal isOpen={isOpen} toggle={toggle}>
-                <ModalHeader>Modal title</ModalHeader>
+            <Modal isOpen={isOpen} toggle={() => toggle("group")}>
+                <ModalHeader>Modal title: </ModalHeader>
                 <ModalBody>
                     <Form>
                         <FormGroup>
-                            <Label for="courseName">Name</Label>
+                            <Label for="courseName">Name: </Label>
                             <Input type="text" name="name" id="courseName" placeholder="Enter a course name"
                                    onChange={(e) => {
                                        courseData.name = e.target.value;
@@ -38,7 +38,7 @@ const CourseAddModal = ({isOpen, toggle, getSectionData}) => {
                             />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="courseDescription">Description</Label>
+                            <Label for="courseDescription">Description: </Label>
                             <Input type="textarea" name="description" id="courseDescription"
                                    placeholder="Enter a course description"
                                    onChange={(e) => {
@@ -49,7 +49,7 @@ const CourseAddModal = ({isOpen, toggle, getSectionData}) => {
                             />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="coursePrice">Price</Label>
+                            <Label for="coursePrice">Price: </Label>
                             <Input type="number" name="price" id="coursePrice"
                                    placeholder="Enter a course price"
                                    onChange={(e) => {
@@ -60,7 +60,7 @@ const CourseAddModal = ({isOpen, toggle, getSectionData}) => {
                             />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="courseDuration">Duration</Label>
+                            <Label for="courseDuration">Duration: </Label>
                             <Input type="number" name="duration" id="courseDuration"
                                    placeholder="Enter a course duration"
                                    onChange={(e) => {

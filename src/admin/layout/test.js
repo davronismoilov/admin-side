@@ -17,7 +17,8 @@ const Test = () => {
     const [menuList, setMenuList] = useState([]);
     const [sectionData, setSectionData] = useState();
     const [page, setPage] = useState(0);
-    const [modalOpen, setModalOpen] = useState(false);
+    const [courseModalOpen, setCourseModalOpen] = useState(false);
+    const [groupModalOpen, setGroupModalOpen] = useState(false);
     const [updateModalOpen, setUpdateModalOpen] = useState(false);
     const [updatingModal, setUpdatingModal] = useState("");
     const [search, setSearch] = useState("");
@@ -68,9 +69,10 @@ const Test = () => {
         })
     };
 
-    function toggle(id) {
-        setUpdatingModal(id)
-        setModalOpen(!modalOpen)
+    function toggle(sectionName, id ) {
+        // setUpdatingModal(id)
+        sectionName.toLowerCase() === "course" ?
+            setCourseModalOpen(!courseModalOpen) : setGroupModalOpen(groupModalOpen);
     }
 
     function toggleUpdate(id) {
