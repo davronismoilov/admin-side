@@ -3,6 +3,7 @@ import {Layout} from 'antd';
 import './test.css'
 import axios from "axios";
 import SectionTable from "../section/SectionTable";
+import CourseAddModal from "../course/courseAddModal";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -59,13 +60,6 @@ const Test = () => {
         })
     };
 
-    // function clearInput() {
-    //     // setName("")
-    //     // setDescription("")
-    //     // setPrice(0)
-    //     // setDuration(0)
-    // }
-
     function toggle(id) {
         setUpdatingModal(id)
         setModalOpen(!modalOpen)
@@ -89,7 +83,7 @@ const Test = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:9000/api/v1/section`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
+            axios.get(`http://localhost:9000/api/v1/section`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
             // if (res.data.statusCode === 200) {
             console.log(res.data)
             setMenuList(res.data)
@@ -137,7 +131,7 @@ const Test = () => {
                     <button disabled={currentPage === page - 1} className={"btn btn-primary"}
                             onClick={() => getSectionData(1)}>next
                     </button>
-                    {/*<SectionAddModel isOpen={modalOpen} toggle={toggle} getSectionData={getSectionData}/>*/}
+                    <CourseAddModal isOpen={modalOpen} toggle={toggle} getSectionData={getSectionData} setSearch={setSearch}/>
                     {/*<SectionUpdateModal isOpen={updateModalOpen} toggle={toggleUpdate} updatingModal={updatingModal}*/}
                     {/*                    getSectionData={getSectionData}/>*/}
                 </Content>

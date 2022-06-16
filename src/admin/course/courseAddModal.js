@@ -3,45 +3,52 @@ import {Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, Co
 import axios from "axios";
 
 
-const CourseAddModal = ({toggle, isOpen, getCourse}) => {
+const CourseAddModal = ({isOpen, toggle, getSectionData, setSearch}) => {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [price, setPrice] = useState("")
     const [duration, setDuration] = useState("")
 
+    const [courseData, setCourseData] = useState({});
+
     function handleSubmit() {
+        // let data = {
+        //     name,
+        //     description,
+        //     price,
+        //     duration
+        // }
+
         let data = {
-            name,
-            description,
-            price,
-            duration
+            ...courseData
         }
 
 
-        axios.post("http://localhost:8081/api/course/add", data).then((res) => {
+        axios.post("http://localhost:9000/api/v1/course/add", data, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
             console.log(res)
             toggle()
             clearInput()
-            getCourse(0)
+            getSectionData(0)
         }).catch((err) => {
             console.log(err)
         })
     }
 
     function clearInput() {
-        setName("")
-        setDescription("")
-        setPrice(0)
-        setDuration(0)
+        // setName("")
+        // setDescription("")
+        // setPrice(0)
+        // setDuration(0)
+        setCourseData({});
     }
 
     const onSearch = (value) => {
         setSearch(value)
 
-        axios.get(`http://localhost:8081/api/course/get?name=${value}`).then((res) => {
+        axios.get(`http://localhost:9000/api/v1/course/get?name=${value}`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
             if (res.data.status) {
                 console.log(res.data.data)
-                setCourses([{
+                setCourseData([{
                     ...res.data.data
                 }])
             }
