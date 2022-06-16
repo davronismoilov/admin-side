@@ -42,10 +42,10 @@ function Course() {
         })
     };
 
-    function toggle(id) {
-        setUpdatingModal(id)
-        setModalOpen(!modalOpen)
-    }
+        function toggle(id) {
+            setUpdatingModal(id)
+            setModalOpen(!modalOpen)
+        }
 
     useEffect(() => {
         axios.get("http://localhost:8081/api/course/list/").then((res) => {

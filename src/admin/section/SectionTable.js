@@ -1,35 +1,57 @@
-import {Button} from "reactstrap";
+import {Button, Col, Row} from "reactstrap";
+import {useState} from "react";
+import Search from "antd/es/input/Search";
 
-const SectionTable = (props) => {
-    const data = props.data;
+const SectionTable = ({data, getSectionData, onSearch, toggleUpdate, deleteSectionItem, toggle}) => {
+
+    const [search, setSearch] = useState("")
 
     return (
         <div>
+            <Row>
+                <Col>
+                    <Button color="success" onClick={() => toggle()}>
+                        + Add Course
+                    </Button>
+                </Col>
+                <Col sm={{size: 1, offset: 4}}>
+                    {
+                        search && <Button color="link" onClick={() => {
+                            getSectionData(0);
+                            setSearch("")
+                        }}>Clear</Button>
+                    }
+                </Col>
+                <Col sm={4}>
+                    <Search placeholder="input search text" onSearch={onSearch} enterButton />
+                    {/*onChange={(e) => setSearch(e.target.value)}*/}
+                </Col>
+            </Row>
             <table className={"table mt-4"}>
                 <thead>
                 <tr>
                     {data.headers.map((head) => {
-                        return (<th>head</th>)
+                        return (<th>{head}</th>)
                     })}
                 </tr>
                 </thead>
                 <tbody>
-                {data.body.map((el, cnt) => {
+                {data.body.map((elm, cnt) => {
                     return <tr key={cnt}>
-                        {data.headers.map((head) => {
-                            return (<td>el[head]</td>)
+                        {data.headers.map(head => {
+                            return (<td>{elm[head]}</td>)
                         })}
                         {
                             (data.delete || data.edit || data.info) && <td>
-                                {data.delete && <Button color="danger" onClick={() => deleteCourse(course.id)}>
+                                {data.delete && <Button color="danger" onClick={() => deleteSectionItem(data.elm.id)}>
                                     Delete
                                 </Button>}
                                 {data.edit &&
-                                    <Button color="secondary" className="m-1" onClick={() => toggleUpdate(course.id)}>
+                                    <Button color="secondary" className="m-1" onClick={() => toggleUpdate(elm.id)}>
                                         Update
                                     </Button>}
                                 {data.info &&
-                                    <Button color="secondary" className="m-1" onClick={() => toggleUpdate(course.id)}>
+                                    <Button color="secondary" className="m-1" onClick={() => toggleUpdate(elm.id)}>
                                         Info
                                     </Button>}
                             </td>
@@ -38,6 +60,8 @@ const SectionTable = (props) => {
                 })}
                 </tbody>
             </table>
+
+
         </div>
     );
 }

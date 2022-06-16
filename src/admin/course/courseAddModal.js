@@ -35,6 +35,21 @@ const CourseAddModal = ({toggle, isOpen, getCourse}) => {
         setDuration(0)
     }
 
+    const onSearch = (value) => {
+        setSearch(value)
+
+        axios.get(`http://localhost:8081/api/course/get?name=${value}`).then((res) => {
+            if (res.data.status) {
+                console.log(res.data.data)
+                setCourses([{
+                    ...res.data.data
+                }])
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+    };
+
 
     return (
         <div>
