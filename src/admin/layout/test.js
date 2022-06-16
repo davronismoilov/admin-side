@@ -3,6 +3,7 @@ import {Layout} from 'antd';
 import './test.css'
 import axios from "axios";
 import SectionTable from "../section/SectionTable";
+import Permission from "../settings/Permission";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -21,9 +22,13 @@ const Test = () => {
 
 
     const handleClick = (menu) => {
+
         setCurrentSectionName(menu.sectionName);
+        if (menu.sectionName === 'permission')
+            return;
+
+        console.log("KELMADI")
         axios.get(`http://localhost:9000/api/v1/section?id=${menu.id}`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
-        // axios.get(`http://localhost:3300`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
             if (res.data.statusCode === 200) {
                 setSectionData(res.data.data);
             } else
@@ -59,13 +64,6 @@ const Test = () => {
         })
     };
 
-    // function clearInput() {
-    //     // setName("")
-    //     // setDescription("")
-    //     // setPrice(0)
-    //     // setDuration(0)
-    // }
-
     function toggle(id) {
         setUpdatingModal(id)
         setModalOpen(!modalOpen)
@@ -76,7 +74,6 @@ const Test = () => {
         setUpdateModalOpen(!updateModalOpen)
     }
 
-    // 1 = true, -1 = false, 0 = nothing
     function deleteSectionItem(sectionName, id) {
         axios.delete(`http://localhost:9000/api/v1/${sectionName}?id=${id}`).then((res) => {
             if (res.status === 204) {
@@ -121,7 +118,9 @@ const Test = () => {
                     }}
                 />
                 <Content>
-                    {sectionData && <SectionTable data={sectionData}
+                    <h1>{currentSectionName}</h1>
+                    {currentSectionName === 'permission' ? <Permission/> :
+                        sectionData && <SectionTable data={sectionData}
                                                   getSectionData={getSectionData}
                                                   onSearch={onSearch}
                                                   toggleUpdate={toggleUpdate}
@@ -137,7 +136,7 @@ const Test = () => {
                     <button disabled={currentPage === page - 1} className={"btn btn-primary"}
                             onClick={() => getSectionData(1)}>next
                     </button>
-                    {/*<SectionAddModel isOpen={modalOpen} toggle={toggle} getSectionData={getSectionData}/>*/}
+                    <SectionAddModel isOpen={modalOpen} toggle={toggle} getSectionData={getSectionData}/>
                     {/*<SectionUpdateModal isOpen={updateModalOpen} toggle={toggleUpdate} updatingModal={updatingModal}*/}
                     {/*                    getSectionData={getSectionData}/>*/}
                 </Content>

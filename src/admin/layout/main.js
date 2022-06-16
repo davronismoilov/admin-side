@@ -13,7 +13,7 @@ import {Link, Route, Routes} from "react-router-dom";
 import User from "../user/user";
 import Course from "../course/course";
 import Test from "./test";
-import Section from "../settings/Section";
+import Permission from "../settings/Permission";
 import CustomHeader from "../header/Header";
 
 const {Header, Sider, Content} = Layout;
