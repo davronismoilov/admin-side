@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, Col} from 'reactstrap';
 import axios from "axios";
 import {DatePicker, Select, Space} from "antd";
 import {Option} from "antd/es/mentions";
 
-
 const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
     const [groupData, setGroupData] = useState({});
+    const [courseList, setCourseList] = useState();
 
     function handleSubmit() {
         axios.post("http://localhost:9000/api/v1/group/add", groupData, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
@@ -19,6 +19,14 @@ const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
         })
     }
 
+    useEffect(() => {
+        axios.get("http://localhost:8081/api/course/list/").then((res) => {
+            if (res.data.status) {
+                setCourseList(res.data.data.content);
+            }
+        })
+    }, [])
+
     function clearInput() {
         setGroupData({});
     }
@@ -30,6 +38,11 @@ const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
 
     const handleDate = (date, dateString) => {
         groupData.startDate = dateString;
+        setGroupData({...groupData});
+    }
+
+    const handleCourseOption = (value) => {
+        groupData.courseId = value;
         setGroupData({...groupData});
     }
 
@@ -79,6 +92,23 @@ const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
                                 <DatePicker onChange={handleDate} />
                             </Space>
                         </FormGroup>
+
+                        <FormGroup>
+                            <Label for="courseList">courseId</Label>
+                            <Select
+                                defaultValue="Select a course"
+                                style={{
+                                    width: 120,
+                                }}
+                                onChange={handleCourseOption}
+                            >
+                                {courseList && courseList.map(course => {
+                                    return <Option value={course.id}>course.name</Option>
+                                })}
+
+                            </Select>
+                        </FormGroup>
+
                         <Col sm={{size: 8, offset: 8}}>
                             <Button color="secondary" onClick={() => {
                                 toggle();
