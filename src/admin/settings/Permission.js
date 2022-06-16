@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import {Button, Checkbox, Switch, Table, Tabs} from "antd";
-import "./mainSettings.css";
+import {Button, Checkbox, Switch, Tabs} from "antd";
+import "./permission.css";
 
 const {TabPane} = Tabs;
 
@@ -89,7 +89,6 @@ const Permission = () => {
                     </thead>
                     <tbody>
                     {data.content.map((perm, i) => {
-                        console.log("IIIIIIIIII",perm);
                         return <tr key={perm.ordinal}>
                             <td>{perm.roleName}</td>
                             <td><Switch defaultChecked={perm.permissions.visibility} onClick={() => {
