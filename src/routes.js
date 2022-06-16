@@ -1,6 +1,6 @@
 import {Navigate, useRoutes} from 'react-router-dom';
 import Test from "./admin/layout/test";
-import Section from "./admin/settings/Section";
+import Permission from "./admin/settings/Permission";
 import Auth from "./admin/auth/auth";
 
 const BaseRoutes = () => {
@@ -10,7 +10,7 @@ const BaseRoutes = () => {
             element: <Test/>,
             children: [
                 {path: '/dashboard/admin', element: <Test/>},
-                {path: '/dashboard/admin/permissions', element: <Section/>},
+                {path: '/dashboard/admin/permissions', element: <Permission/>},
             ],
         },
         {
