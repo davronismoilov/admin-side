@@ -4,9 +4,9 @@ import './test.css'
 import axios from "axios";
 import SectionTable from "../section/SectionTable";
 import Permission from "../settings/Permission";
-import CourseAddModal from "../course/courseAddModal";
+import CourseAddModal from "../course/CourseAddModal";
 import GroupAddModal from "../group/GroupAddModal";
-import CourseUpdateModal from "../course/courseUpdateModal";
+import CourseUpdateModal from "../course/CourseUpdateModal";
 
 const {Header, Content, Footer, Sider} = Layout;
 

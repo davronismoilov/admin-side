@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import CourseAddModal from "./courseAddModal";
-import CourseUpdateModal from "./courseUpdateModal";
+import CourseAddModal from "./CourseAddModal";
+import CourseUpdateModal from "./CourseUpdateModal";
 import {Input, Space} from 'antd';
 import {AudioOutlined} from '@ant-design/icons';
 import {Col, Row, Button} from "reactstrap";

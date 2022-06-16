@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
 import {Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, Col} from 'reactstrap';
 import axios from "axios";
+import {DatePicker, Select, Space} from "antd";
+import {Option} from "antd/es/mentions";
 
 
 const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
-    const [courseData, setCourseData] = useState({});
+    const [groupData, setGroupData] = useState({});
 
     function handleSubmit() {
-        axios.post("http://localhost:9000/api/v1/course/add", courseData, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
+        axios.post("http://localhost:9000/api/v1/group/add", groupData, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
             console.log(res)
             toggle()
             clearInput()
@@ -18,7 +20,17 @@ const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
     }
 
     function clearInput() {
-        setCourseData({});
+        setGroupData({});
+    }
+
+    function handleSelect(value){
+        groupData.type = value;
+        setGroupData({...groupData});
+    }
+
+    const handleDate = (date, dateString) => {
+        groupData.startDate = dateString;
+        setGroupData({...groupData});
     }
 
     return (
@@ -28,47 +40,44 @@ const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
                 <ModalBody>
                     <Form>
                         <FormGroup>
-                            <Label for="courseName">Name</Label>
-                            <Input type="text" name="name" id="courseName" placeholder="Enter a course name"
+                            <Label for="groupName">Name</Label>
+                            <Input type="text" name="name" id="groupName" placeholder="Enter a group name"
                                    onChange={(e) => {
-                                       courseData.name = e.target.value;
-                                       setCourseData({...courseData})
+                                       groupData.name = e.target.value;
+                                       setGroupData({...groupData})
                                    }}
-                                   value={courseData.name}
+                                   value={groupData.name}
                             />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="courseDescription">Description</Label>
-                            <Input type="textarea" name="description" id="courseDescription"
-                                   placeholder="Enter a course description"
+                            <Label for="groupMemberCount">Description</Label>
+                            <Input type="number" name="membersCount" id="groupMemberCount"
+                                   placeholder="Enter a number of members"
                                    onChange={(e) => {
-                                       courseData.description = e.target.value;
-                                       setCourseData({...courseData});
+                                       groupData.membersCount = e.target.value;
+                                       setGroupData({...groupData});
                                    }}
-                                   value={courseData.description}
+                                   value={groupData.membersCount}
                             />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="coursePrice">Price</Label>
-                            <Input type="number" name="price" id="coursePrice"
-                                   placeholder="Enter a course price"
-                                   onChange={(e) => {
-                                       courseData.price = e.target.value;
-                                       setCourseData({...courseData});
-                                   }}
-                                   value={courseData.price}
-                            />
+                            <Label for="type">Gender</Label>
+                                <Select
+                                    defaultValue="MALE"
+                                    style={{
+                                        width: 120,
+                                    }}
+                                    onChange={handleSelect}
+                                >
+                                    <Option value="MALE">Male</Option>
+                                    <Option value="FEMALE">Female</Option>
+                                </Select>
                         </FormGroup>
                         <FormGroup>
-                            <Label for="courseDuration">Duration</Label>
-                            <Input type="number" name="duration" id="courseDuration"
-                                   placeholder="Enter a course duration"
-                                   onChange={(e) => {
-                                       courseData.duration = e.target.value;
-                                       setCourseData({...courseData})
-                                   }}
-                                   value={courseData.duration}
-                            />
+                            <Label for="startDate">Start date</Label>
+                            <Space direction="vertical">
+                                <DatePicker onChange={handleDate} />
+                            </Space>
                         </FormGroup>
                         <Col sm={{size: 8, offset: 8}}>
                             <Button color="secondary" onClick={() => {
