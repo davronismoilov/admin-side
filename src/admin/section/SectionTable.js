@@ -10,7 +10,7 @@ const SectionTable = ({data, getSectionData, onSearch, toggleUpdate, deleteSecti
         <div>
             <Row>
                 <Col>
-                    {data.edit && <Button color="success" onClick={() => toggle(sectionName)}>
+                    {data.update && <Button color="success" onClick={() => toggle(sectionName)}>
                         + Add {sectionName}
                     </Button>}
                 </Col>
@@ -42,11 +42,11 @@ const SectionTable = ({data, getSectionData, onSearch, toggleUpdate, deleteSecti
                             return (<td>{elm[head]}</td>)
                         })}
                         {
-                            (data.delete || data.edit || data.info) && <td>
+                            (data.delete || data.update || data.info) && <td>
                                 {data.delete && <Button color="danger" onClick={() => deleteSectionItem(data.elm.id)}>
                                     Delete
                                 </Button>}
-                                {data.edit &&
+                                {data.update &&
                                     <Button color="primary" className="m-1" onClick={() => toggleUpdate(elm.id)}>
                                         Update
                                     </Button>}
@@ -60,8 +60,6 @@ const SectionTable = ({data, getSectionData, onSearch, toggleUpdate, deleteSecti
                 })}
                 </tbody>
             </table>
-
-
         </div>
     );
 }

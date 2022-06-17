@@ -9,7 +9,7 @@ const CourseAddModal = ({isOpen, toggle, getSectionData}) => {
     function handleSubmit() {
         axios.post("http://localhost:9000/api/v1/course/add", courseData, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
             console.log(res)
-            toggle()
+            toggle("course")
             clearInput()
             getSectionData(0)
         }).catch((err) => {
@@ -23,8 +23,8 @@ const CourseAddModal = ({isOpen, toggle, getSectionData}) => {
 
     return (
         <div>
-            <Modal isOpen={isOpen} toggle={() => toggle("group")}>
-                <ModalHeader>Modal title: </ModalHeader>
+            <Modal isOpen={isOpen} toggle={() => toggle("course")}>
+                <ModalHeader>Add new Course: </ModalHeader>
                 <ModalBody>
                     <Form>
                         <FormGroup>

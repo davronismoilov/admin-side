@@ -31,7 +31,6 @@ const Test = () => {
         if (menu.sectionName === 'permission')
             return;
 
-        console.log("KELMADI")
         axios.get(`http://localhost:9000/api/v1/section?id=${menu.id}`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
         // axios.get(`http://localhost:3300`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
             if (res.data.statusCode === 200) {
@@ -71,10 +70,12 @@ const Test = () => {
         })
     };
 
-    function toggle(sectionName, id ) {
+    function toggle(sectionName) {
         // setUpdatingModal(id)
-        sectionName.toLowerCase() === "course" ?
-            setCourseModalOpen(!courseModalOpen) : setGroupModalOpen(!groupModalOpen);
+        if(sectionName.toLowerCase().indexOf("course") !== -1)
+            setCourseModalOpen(!courseModalOpen)
+        else if(sectionName.toLowerCase().indexOf("group") !== -1)
+            setGroupModalOpen(!setGroupModalOpen)
     }
 
     function toggleUpdate(id) {

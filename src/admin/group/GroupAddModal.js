@@ -11,7 +11,7 @@ const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
     function handleSubmit() {
         axios.post("http://localhost:9000/api/v1/group/add", groupData, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
             console.log(res)
-            toggle()
+            toggle("group")
             clearInput()
             getSectionData(0)
         }).catch((err) => {
@@ -20,7 +20,7 @@ const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
     }
 
     useEffect(() => {
-        axios.get("http://localhost:8081/api/course/list/").then((res) => {
+        axios.get("http://localhost:9000/api/v1/course/list?size=500").then((res) => {
             if (res.data.status) {
                 setCourseList(res.data.data.content);
             }
