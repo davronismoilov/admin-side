@@ -72,7 +72,7 @@ const Test = () => {
     function toggle(sectionName, id ) {
         // setUpdatingModal(id)
         sectionName.toLowerCase() === "course" ?
-            setCourseModalOpen(!courseModalOpen) : setGroupModalOpen(groupModalOpen);
+            setCourseModalOpen(!courseModalOpen) : setGroupModalOpen(!groupModalOpen);
     }
 
     function toggleUpdate(id) {

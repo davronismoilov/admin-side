@@ -10,7 +10,7 @@ const SectionTable = ({data, getSectionData, onSearch, toggleUpdate, deleteSecti
         <div>
             <Row>
                 <Col>
-                    {data.add && <Button color="success" onClick={() => toggle(sectionName)}>
+                    {data.edit && <Button color="success" onClick={() => toggle(sectionName)}>
                         + Add {sectionName}
                     </Button>}
                 </Col>
