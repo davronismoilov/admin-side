@@ -38,6 +38,8 @@ const Test = () => {
                 setSectionData(res.data.data);
             } else
                 throw Error(res.data);
+        }).catch(err => {
+            setSectionData(undefined);
         })
     }
 
@@ -142,10 +144,10 @@ const Test = () => {
                     <button disabled={currentPage === page - 1} className={"btn btn-primary"}
                             onClick={() => getSectionData(1)}>next
                     </button>
-                    <CourseAddModal isOpen={modalOpen} toggle={toggle} getSectionData={getSectionData} />
+                    <CourseAddModal isOpen={courseModalOpen} toggle={toggle} getSectionData={getSectionData} />
                     <CourseUpdateModal isOpen={updateModalOpen} toggle={toggleUpdate} updatingModal={updatingModal}
                                        getSectionData={getSectionData}/>
-                    <GroupAddModal isOpen={modalOpen} toggle={toggle} getSectionData={getSectionData} />
+                    <GroupAddModal isOpen={groupModalOpen} toggle={toggle} getSectionData={getSectionData} />
                     {/*<SectionUpdateModal isOpen={updateModalOpen} toggle={toggleUpdate} updatingModal={updatingModal}*/}
                     {/*                    getSectionData={getSectionData}/>*/}
                 </Content>
