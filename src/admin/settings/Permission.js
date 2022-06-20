@@ -30,6 +30,7 @@ const Permission = () => {
     }, [])
 
     const onChange = (id) => {
+        console.log("onclick")
         axios.get(`${BASE_URL}/get/${id}`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
             if (res.data.statusCode === 200) {
                 setData({...res.data.data});
@@ -63,105 +64,57 @@ const Permission = () => {
 
     return (
 
-        <div>
-            {sectionList.map((section) => {
-                return (
-                    <div>
-                        <Tabs onChange={() => onChange(section.id)} type="card">
-                            <TabPane tab={section.name} key={section.id}>
-                                <table className={"table"}>
-                                    <thead>
-                                    <tr>
-                                        <th>role</th>
-                                        <th>visibility</th>
-                                        <th>update</th>
-                                        <th>delete</th>
-                                        <th>info</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {data.content.map((perm, i) => {
-                                        return <tr key={perm.ordinal}>
-                                            <td>{perm.roleName}</td>
-                                            <td><Switch defaultChecked={perm.permissions.visibility} onClick={() => {
-                                                switchBtnOnChange(perm.ordinal, i)
-                                            }}/></td>
-                                            <td><Checkbox disabled={!switchStatus[perm.ordinal]}
-                                                          defaultChecked={perm.permissions.update} onClick={() => {
-                                                handleChange(perm.ordinal, "update")
-                                            }}/></td>
-                                            <td><Checkbox disabled={!switchStatus[perm.ordinal]}
-                                                          defaultChecked={perm.permissions.delete} onChange={() => {
-                                                handleChange(perm.ordinal, "delete")
-                                            }}/></td>
-                                            <td><Checkbox disabled={!switchStatus[perm.ordinal]}
-                                                          defaultChecked={perm.permissions.info} onChange={() => {
-                                                handleChange(perm.ordinal, "info")
-                                            }}/></td>
-                                        </tr>
-                                    })}
-                                    </tbody>
-                                </table>
-                                <Button type="primary" block onClick={saveBtnOnclick}> Save</Button>
-                            </TabPane>
-                        </Tabs>
-                    </div>
-                )})
+    <div>
+        <ul className={"nav nav-navbar"}>
+            {
+                sectionList.map((section) => {
+                    return <ol className={""} key={section.id}>
+                        <button className={"btn btn-primary"} onClick={() => onChange(section.id)}>
+                            {section.sectionName}
+                        </button>
+                    </ol>
+                })
             }
-        </div>);
-    // <div>
-    //     <ul className={"nav nav-navbar"}>
-    //         {
-    //             sectionList.map((section) => {
-    //                 return <li className={""} key={section.id}>
-    //                     <button className={"ant-btn-primary"} onClick={}>
-    //                         {section.name}
-    //                     </button>
-    //                 </li>
-    //             })
-    //         }
-    //     </ul>
-    //     <div>
-    //         <table className={"table"}>
-    //             <thead>
-    //             <tr>
-    //                 <th>role</th>
-    //                 <th>visibility</th>
-    //                 <th>update</th>
-    //                 <th>delete</th>
-    //                 <th>info</th>
-    //             </tr>
-    //             </thead>
-    //             <tbody>
-    //             {data.content.map((perm, i) => {
-    //                 return <tr key={perm.ordinal}>
-    //                     <td>{perm.roleName}</td>
-    //                     <td><Switch defaultChecked={perm.permissions.visibility} onClick={() => {
-    //                         switchBtnOnChange(perm.ordinal, i)
-    //                     }}/></td>
-    //                     <td><Checkbox disabled={!switchStatus[perm.ordinal]}
-    //                                   defaultChecked={perm.permissions.update} onClick={() => {
-    //                         handleChange(perm.ordinal, "update")
-    //                     }}/></td>
-    //                     <td><Checkbox disabled={!switchStatus[perm.ordinal]}
-    //                                   defaultChecked={perm.permissions.delete} onChange={() => {
-    //                         handleChange(perm.ordinal, "delete")
-    //                     }}/></td>
-    //                     <td><Checkbox disabled={!switchStatus[perm.ordinal]}
-    //                                   defaultChecked={perm.permissions.info} onChange={() => {
-    //                         handleChange(perm.ordinal, "info")
-    //                     }}/></td>
-    //                 </tr>
-    //             })}
-    //             </tbody>
-    //         </table>
-    // {/*        <Button type="primary" block onClick={saveBtnOnclick}> Save</Button>*/
-    // }
-    // {/*    </div>*/
-    // }
-    // {/*</div>*/
-//     }
-// )
-//     ;
+        </ul>
+        <div>
+            <table className={"table"}>
+                <thead>
+                <tr>
+                    <th>role</th>
+                    <th>visibility</th>
+                    <th>update</th>
+                    <th>delete</th>
+                    <th>info</th>
+                </tr>
+                </thead>
+                <tbody>
+                {data.content.map((perm, i) => {
+                    return <tr key={perm.ordinal}>
+                        <td>{perm.roleName}</td>
+                        <td><Switch defaultChecked={perm.permissions.visibility} onClick={() => {
+                            switchBtnOnChange(perm.ordinal, i)
+                        }}/></td>
+                        <td><Checkbox disabled={!switchStatus[perm.ordinal]}
+                                      defaultChecked={perm.permissions.update} onClick={() => {
+                            handleChange(perm.ordinal, "update")
+                        }}/></td>
+                        <td><Checkbox disabled={!switchStatus[perm.ordinal]}
+                                      defaultChecked={perm.permissions.delete} onChange={() => {
+                            handleChange(perm.ordinal, "delete")
+                        }}/></td>
+                        <td><Checkbox disabled={!switchStatus[perm.ordinal]}
+                                      defaultChecked={perm.permissions.info} onChange={() => {
+                            handleChange(perm.ordinal, "info")
+                        }}/></td>
+                    </tr>
+                })}
+                </tbody>
+            </table>
+           <Button type="primary" block onClick={saveBtnOnclick}> Save</Button>*/
+
+        </div>
+    </div>
+)
+    ;
 }
 export default Permission;

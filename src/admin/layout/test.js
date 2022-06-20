@@ -86,7 +86,6 @@ const Test = () => {
     function deleteSectionItem(sectionName, id) {
         axios.delete(`${BASE_URL}/${sectionName}?id=${id}`).then((res) => {
             if (res.status === 204) {
-                alert("Deleted")
                 getSectionData(0)
             }
         }).catch((err) => {
