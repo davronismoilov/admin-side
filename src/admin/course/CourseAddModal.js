@@ -5,9 +5,10 @@ import axios from "axios";
 
 const CourseAddModal = ({isOpen, toggle, getSectionData}) => {
     const [courseData, setCourseData] = useState({});
+    const BASE_URL ='http://localhost:9000/api/v1/course';
 
     function handleSubmit() {
-        axios.post("http://localhost:9000/api/v1/course/add", courseData, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
+        axios.post(`${BASE_URL}/add`, courseData, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
             console.log(res)
             toggle("course")
             clearInput()
