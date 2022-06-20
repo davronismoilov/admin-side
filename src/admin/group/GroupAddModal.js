@@ -9,7 +9,7 @@ const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
     const [courseList, setCourseList] = useState();
 
     function handleSubmit() {
-        axios.post("http://localhost:9000/api/v1/group/add", groupData, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
+        axios.post("http://localhost:9000/api/v1/course/group/add", groupData, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
             console.log(res)
             toggle("group")
             clearInput()

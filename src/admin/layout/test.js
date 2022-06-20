@@ -84,7 +84,7 @@ const Test = () => {
     }
 
     function deleteSectionItem(sectionName, id) {
-        axios.delete(`http://localhost:9000/api/v1/${sectionName}?id=${id}`).then((res) => {
+        axios.delete(`http://localhost:9000/api/v1/user/${sectionName}?id=${id}`).then((res) => {
             if (res.status === 204) {
                 alert("Deleted")
                 getSectionData(0)
@@ -95,7 +95,7 @@ const Test = () => {
     }
 
     useEffect(() => {
-            axios.get(`http://localhost:9000/api/v1/section`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
+            axios.get(`http://localhost:9000/api/v1/user/section`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
             // if (res.data.statusCode === 200) {
             console.log(res.data)
             setMenuList(res.data)

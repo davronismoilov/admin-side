@@ -33,7 +33,7 @@ const CourseUpdateModal = ({toggle, isOpen, getCourse, updatingModal}) => {
     }, [updatingModal])
 
     function getOneCourse(id) {
-        axios.get(`http://localhost:8081/api/course/get/${id}`).then((res) => {
+        axios.get(`http://localhost:9000/api/v1/course/get/${id}`).then((res) => {
             console.log(res.data, "Update Modal Get one course")
             if (res.data.status) {
                 setName(res.data.data.name)
