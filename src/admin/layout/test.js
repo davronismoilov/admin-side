@@ -13,6 +13,7 @@ const {Header, Content, Footer, Sider} = Layout;
 
 const Test = () => {
 
+    const BASE_URL = "http://localhost:9000/api/v1/user/admin/section";
     const [currentPage, setCurrentPage] = useState(0);
     const [menuList, setMenuList] = useState([]);
     const [sectionData, setSectionData] = useState();
@@ -31,8 +32,7 @@ const Test = () => {
         if (menu.sectionName === 'permission')
             return;
 
-        axios.get(`http://localhost:9000/api/v1/section?id=${menu.id}`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
-        // axios.get(`http://localhost:3300`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
+        axios.get(`${BASE_URL}/data?id=${menu.id}`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
             if (res.data.statusCode === 200) {
                 setSectionData(res.data.data);
             } else
@@ -48,7 +48,7 @@ const Test = () => {
             helper++;
         else if (hasNext === -1)
             helper--;
-        axios.get(`http://localhost:9000/api/v1/${currentSectionName.toLowerCase()}/list?page=${page}`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
+        axios.get(`${BASE_URL}/${currentSectionName.toLowerCase()}/list?page=${page}`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
             if (res.data.status) {
                 setSectionData(res.data.data.content)
                 setPage(res.data.data.totalPages)
@@ -60,7 +60,7 @@ const Test = () => {
     const onSearch = (value) => {
         setSearch(value)
 
-        axios.get(`http://localhost:9000/api/v1/${currentSectionName}/get?name=${value}`).then((res) => {
+        axios.get(`${BASE_URL}/${currentSectionName}/get?name=${value}`).then((res) => {
             if (res.data.status) {
                 console.log(res.data.data)
                 setSectionData({...res.data.data})
@@ -84,7 +84,7 @@ const Test = () => {
     }
 
     function deleteSectionItem(sectionName, id) {
-        axios.delete(`http://localhost:9000/api/v1/user/${sectionName}?id=${id}`).then((res) => {
+        axios.delete(`${BASE_URL}/${sectionName}?id=${id}`).then((res) => {
             if (res.status === 204) {
                 alert("Deleted")
                 getSectionData(0)
@@ -95,7 +95,7 @@ const Test = () => {
     }
 
     useEffect(() => {
-            axios.get(`http://localhost:9000/api/v1/user/section`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
+            axios.get(`${BASE_URL}`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
             // if (res.data.statusCode === 200) {
             console.log(res.data)
             setMenuList(res.data)

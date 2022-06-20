@@ -5,8 +5,8 @@ import "./permission.css";
 
 const {TabPane} = Tabs;
 
-const URL_FOR_GET_SECTION = "http://localhost:9000/api/v1/section/get";
-const URL_FOR_POST_PERMISSION = "http://localhost:9000/api/v1/section/edit";
+const URL_FOR_GET_SECTION = "http://localhost:9000/api/v1/user/admin/section/get";
+const URL_FOR_POST_PERMISSION = "http://localhost:9000/api/v1/user/admin/section/edit";
 const Permission = () => {
     console.log("Permission")
     const [sectionList, setSectionList] = useState([]);

@@ -7,9 +7,10 @@ import {Option} from "antd/es/mentions";
 const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
     const [groupData, setGroupData] = useState({});
     const [courseList, setCourseList] = useState();
+    const BASE_URL ='http://localhost:9000/api/v1/course';
 
     function handleSubmit() {
-        axios.post("http://localhost:9000/api/v1/course/group/add", groupData, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
+        axios.post(`${BASE_URL}/group/add`, groupData, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
             console.log(res)
             toggle("group")
             clearInput()
@@ -20,7 +21,7 @@ const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
     }
 
     useEffect(() => {
-        axios.get("http://localhost:9000/api/v1/course/list?size=500").then((res) => {
+        axios.get(`${BASE_URL}/list?size=500`).then((res) => {
             if (res.data.status) {
                 setCourseList(res.data.data.content);
             }
