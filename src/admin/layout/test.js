@@ -25,8 +25,12 @@ const Test = () => {
     const [search, setSearch] = useState("");
     const [currentSectionName, setCurrentSectionName] = useState("");
 
+    const [idForActiveMenu, setId] = useState(0);
+
 
     const handleClick = (menu) => {
+
+        setId(menu.id)
 
         setCurrentSectionName(menu.sectionName);
         if (menu.sectionName === 'permission')
@@ -43,14 +47,17 @@ const Test = () => {
     }
 
     function getSectionData(hasNext) {
+        console.log(hasNext, currentPage)
         let helper = currentPage;
         if (hasNext === 1)
             helper++;
         else if (hasNext === -1)
             helper--;
-        axios.get(`${BASE_URL}/${currentSectionName.toLowerCase()}/list?page=${page}`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
-            if (res.data.status) {
-                setSectionData(res.data.data.content)
+        console.log(`${BASE_URL}/data?id=${idForActiveMenu}&pageNumber=${helper}`)
+        axios.get(`${BASE_URL}/data?id=${idForActiveMenu}&pageNumber=${helper}`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
+            if (res.data.statusCode === 200) {
+                console.log(res.data)
+                setSectionData(res.data.data)
                 setPage(res.data.data.totalPages)
                 setCurrentPage(helper)
             }
@@ -100,7 +107,7 @@ const Test = () => {
             setMenuList(res.data)
             // }
         });
-    }, [])
+    }, [sectionData])
 
     const [collapsed, setCollapsed] = useState(false);
     return (
@@ -112,7 +119,7 @@ const Test = () => {
             <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
                 <ul>
                     {menuList.map((menu, index) => {
-                        return <li key={menu.id} onClick={() => handleClick(menu)}>
+                        return <li key={menu.id} style={{backgroundColor: "#387"}} onClick={() => handleClick(menu)}>
                             {menu.sectionName}
                         </li>
                     })}
