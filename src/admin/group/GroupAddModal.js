@@ -5,6 +5,8 @@ import {DatePicker, Select, Space} from "antd";
 import {Option} from "antd/es/mentions";
 
 const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
+
+
     const [groupData, setGroupData] = useState({});
     const [courseList, setCourseList] = useState();
     const BASE_URL ='http://localhost:9000/api/v1/course';
@@ -21,9 +23,11 @@ const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
     }
 
     useEffect(() => {
-        axios.get(`${BASE_URL}/list?size=500`).then((res) => {
-            if (res.data.status) {
-                setCourseList(res.data.data.content);
+        console.log(`${BASE_URL}/list?size=500`)
+        axios.get(`http://localhost:9000/api/v1/user/admin/section/data?id=4`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then((res) => {
+            console.log(res.data)
+            if (res.data.success) {
+                setCourseList(res.data.data.body.content);
             }
         })
     }, [])
@@ -49,7 +53,7 @@ const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
 
     return (
         <div>
-            <Modal isOpen={isOpen} toggle={() => toggle("group")}>
+            <Modal isOpen={true} toggle={() => toggle("group")}>
                 <ModalHeader>Modal title</ModalHeader>
                 <ModalBody>
                     <Form>
@@ -104,7 +108,7 @@ const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
                                 onChange={handleCourseOption}
                             >
                                 {courseList && courseList.map(course => {
-                                    return <Option value={course.id}>course.name</Option>
+                                    return <Option value={course.name} key={course.id}>{course.name}</Option>
                                 })}
 
                             </Select>

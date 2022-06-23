@@ -31,7 +31,6 @@ const Test = () => {
     const handleClick = (menu) => {
 
         setId(menu.id)
-
         setCurrentSectionName(menu.sectionName);
         if (menu.sectionName === 'permission')
             return;
@@ -77,11 +76,15 @@ const Test = () => {
     };
 
     function toggle(sectionName) {
+        alert(sectionName)
         // setUpdatingModal(id)
-        if(sectionName.toLowerCase().indexOf("course") !== -1)
+        if(sectionName.toLowerCase().indexOf("course") !== -1){
             setCourseModalOpen(!courseModalOpen)
-        else if(sectionName.toLowerCase().indexOf("group") !== -1)
-            setGroupModalOpen(!setGroupModalOpen)
+        }
+        else if(sectionName.toLowerCase().indexOf("group") !== -1){
+            setGroupModalOpen(!groupModalOpen)
+        }
+
     }
 
     function toggleUpdate(id) {
@@ -150,12 +153,10 @@ const Test = () => {
                     <button disabled={currentPage === page - 1} className={"btn btn-primary"}
                             onClick={() => getSectionData(1)}>next
                     </button>
-                    <CourseAddModal isOpen={courseModalOpen} toggle={toggle} getSectionData={getSectionData} />
+                    {courseModalOpen ? <CourseAddModal  toggle={toggle} getSectionData={getSectionData} /> : "" }
                     <CourseUpdateModal isOpen={updateModalOpen} toggle={toggleUpdate} updatingModal={updatingModal}
                                        getSectionData={getSectionData}/>
-                    <GroupAddModal isOpen={groupModalOpen} toggle={toggle} getSectionData={getSectionData} />
-                    {/*<SectionUpdateModal isOpen={updateModalOpen} toggle={toggleUpdate} updatingModal={updatingModal}*/}
-                    {/*                    getSectionData={getSectionData}/>*/}
+                    {groupModalOpen ? <GroupAddModal  toggle={toggle} getSectionData={getSectionData} /> : "" }
                 </Content>
             </Layout>
         </Layout>
