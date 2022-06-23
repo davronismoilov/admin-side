@@ -75,7 +75,6 @@ const Test = () => {
     };
 
     function toggle(sectionName) {
-        alert(sectionName)
         // setUpdatingModal(id)
         if(sectionName.toLowerCase().indexOf("course") !== -1){
             setCourseModalOpen(!courseModalOpen)
