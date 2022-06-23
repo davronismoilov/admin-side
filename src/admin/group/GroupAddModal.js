@@ -4,7 +4,7 @@ import axios from "axios";
 import {DatePicker, Select, Space} from "antd";
 import {Option} from "antd/es/mentions";
 
-const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
+const GroupAddModal = ({ toggle, getSectionData}) => {
 
 
     const [groupData, setGroupData] = useState({});
@@ -68,7 +68,7 @@ const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
                             />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="groupMemberCount">Description: </Label>
+                            <Label for="groupMemberCount">MemberCount: </Label>
                             <Input type="number" name="membersCount" id="groupMemberCount"
                                    placeholder="Enter a number of members"
                                    onChange={(e) => {
@@ -87,8 +87,8 @@ const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
                                     }}
                                     onChange={handleSelect}
                                 >
-                                    <Option value="MALE">Male</Option>
-                                    <Option value="FEMALE">Female</Option>
+                                    <Option value="MALE" key={"MALE"}>Male</Option>
+                                    <Option value="FEMALE" key={"FEMALE"}>Female</Option>
                                 </Select>
                         </FormGroup>
                         <FormGroup>
@@ -108,7 +108,7 @@ const GroupAddModal = ({isOpen, toggle, getSectionData}) => {
                                 onChange={handleCourseOption}
                             >
                                 {courseList && courseList.map(course => {
-                                    return <Option value={course.name} key={course.id}>{course.name}</Option>
+                                    return <Option value={course.id} key={course.id}>{course.name}</Option>
                                 })}
 
                             </Select>
