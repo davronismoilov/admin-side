@@ -12,7 +12,7 @@ const api = ({dispatch}) => (next) => (action) => {
 
 
     axios({
-        baseURL: 'http://192.168.197.66:9000/api/v1/',
+        baseURL: 'http://192.168.197.66:9000/api/',
         url,
         method,
         data,

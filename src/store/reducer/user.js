@@ -22,7 +22,7 @@ const slice = createSlice({
 
 
 export const login = (data) => apiCall({
-    url: 'auth/login',
+    url: 'v1/auth/login',
     method: 'POST',
     onSuccess: slice.actions.onAuthSuccess.type,
     onFail: slice.actions.onFail.type,

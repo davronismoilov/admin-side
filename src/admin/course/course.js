@@ -2,9 +2,11 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import CourseAddModal from "./CourseAddModal";
 import CourseUpdateModal from "./CourseUpdateModal";
-import {Input, Space} from 'antd';
+import {Input} from 'antd';
 import {AudioOutlined} from '@ant-design/icons';
 import {Col, Row, Button} from "reactstrap";
+import {connect} from "react-redux";
+import {getCourses} from "../../store/reducer/course";
 
 const {Search} = Input;
 
@@ -17,11 +19,10 @@ const suffix = (
     />
 );
 
-function Course() {
+function Course({courses, getCourses}) {
 
-    const [courses, setCourses] = useState([])
     const [page, setPage] = useState(0)
-    const [currentPage, setcurrentPage] = useState(0)
+    const [currentPage, setCurrentPage] = useState(0)
     const [modalOpen, setModalOpen] = useState(false)
     const [updateModalOpen, setUpdateModalOpen] = useState(false)
     const [updatingModal, setUpdatingModal] = useState("")
@@ -29,23 +30,13 @@ function Course() {
 
     const onSearch = (value) => {
         setSearch(value)
-
-        axios.get(`http://localhost:9000/api/course/get?name=${value}`).then((res) => {
-            if (res.data.status) {
-                console.log(res.data.data)
-                setCourses([{
-                    ...res.data.data
-                }])
-            }
-        }).catch((err) => {
-            console.log(err)
-        })
+        getCourses(value)
     };
 
-        function toggle(id) {
-            setUpdatingModal(id)
-            setModalOpen(!modalOpen)
-        }
+    function toggle(id) {
+        setUpdatingModal(id)
+        setModalOpen(!modalOpen)
+    }
 
     useEffect(() => {
         axios.get("http://localhost:9000/api/course/list/").then((res) => {
@@ -66,7 +57,7 @@ function Course() {
             if (res.data.status) {
                 setCourses(res.data.data.content)
                 setPage(res.data.data.totalPages)
-                setcurrentPage(helper)
+                setCurrentPage(helper)
             }
         })
     }
@@ -106,7 +97,7 @@ function Course() {
             </Col>
             <Col sm={4}>
                 <Search placeholder="input search text" onSearch={onSearch} enterButton
-                        />
+                />
                 {/*onChange={(e) => setSearch(e.target.value)}*/}
             </Col>
         </Row>
@@ -156,4 +147,4 @@ function Course() {
     </div>
 }
 
-export default Course;
+export default connect(({course: {courses}}) => ({courses}), {getCourses})(Course);
