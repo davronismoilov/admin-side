@@ -24,7 +24,7 @@ const CourseAddModal = ({isOpen, toggle, getSectionData}) => {
 
     return (
         <div>
-            <Modal isOpen={isOpen} toggle={() => toggle("course")}>
+            <Modal isOpen={true} toggle={() => toggle("course")}>
                 <ModalHeader>Add new Course: </ModalHeader>
                 <ModalBody>
                     <Form>
