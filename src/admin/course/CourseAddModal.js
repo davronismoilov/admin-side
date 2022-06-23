@@ -3,7 +3,7 @@ import {Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, Co
 import axios from "axios";
 
 
-const CourseAddModal = ({isOpen, toggle, getSectionData}) => {
+const CourseAddModal = ({toggle}) => {
     const [courseData, setCourseData] = useState({});
     const BASE_URL = 'http://localhost:9000/api/v1/course';
 

@@ -6,9 +6,8 @@ import SectionTable from "../section/SectionTable";
 import Permission from "../settings/Permission";
 import CourseAddModal from "../course/CourseAddModal";
 import GroupAddModal from "../group/GroupAddModal";
-import CourseUpdateModal from "../course/CourseUpdateModal";
 
-const {Header, Content, Footer, Sider} = Layout;
+const {Header, Content, Sider} = Layout;
 
 
 const Test = () => {
