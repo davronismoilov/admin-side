@@ -76,10 +76,9 @@ const Test = () => {
 
     function toggle(sectionName) {
         // setUpdatingModal(id)
-        if(sectionName.toLowerCase().indexOf("course") !== -1){
+        if (sectionName.toLowerCase().indexOf("course") !== -1) {
             setCourseModalOpen(!courseModalOpen)
-        }
-        else if(sectionName.toLowerCase().indexOf("group") !== -1){
+        } else if (sectionName.toLowerCase().indexOf("group") !== -1) {
             setGroupModalOpen(!groupModalOpen)
         }
 
@@ -101,7 +100,7 @@ const Test = () => {
     }
 
     useEffect(() => {
-            axios.get(`${BASE_URL}`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
+        axios.get(`${BASE_URL}`, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(res => {
             // if (res.data.statusCode === 200) {
             console.log(res.data)
             setMenuList(res.data)
@@ -136,13 +135,13 @@ const Test = () => {
                     <h1>{currentSectionName}</h1>
                     {currentSectionName === 'permission' ? <Permission/> :
                         sectionData && <SectionTable data={sectionData}
-                                                  getSectionData={getSectionData}
-                                                  onSearch={onSearch}
-                                                  toggleUpdate={toggleUpdate}
-                                                  deleteSectionItem={deleteSectionItem}
-                                                  toggle={toggle}
-                                                  sectionName={currentSectionName}
-                    />}
+                                                     getSectionData={getSectionData}
+                                                     onSearch={onSearch}
+                                                     toggleUpdate={toggleUpdate}
+                                                     deleteSectionItem={deleteSectionItem}
+                                                     toggle={toggle}
+                                                     sectionName={currentSectionName}
+                        />}
 
                     <button disabled={currentPage === 0} className={"btn btn-primary"}
                             onClick={() => getSectionData(-1)}>prev
@@ -151,10 +150,8 @@ const Test = () => {
                     <button disabled={currentPage === page - 1} className={"btn btn-primary"}
                             onClick={() => getSectionData(1)}>next
                     </button>
-                    {courseModalOpen ? <CourseAddModal  toggle={toggle} getSectionData={getSectionData} /> : "" }
-                    <CourseUpdateModal isOpen={updateModalOpen} toggle={toggleUpdate} updatingModal={updatingModal}
-                                       getSectionData={getSectionData}/>
-                    {groupModalOpen ? <GroupAddModal  toggle={toggle} getSectionData={getSectionData} /> : "" }
+                    {courseModalOpen ? <CourseAddModal toggle={toggle} getSectionData={getSectionData}/> : ""}
+                    {groupModalOpen ? <GroupAddModal toggle={toggle} getSectionData={getSectionData}/> : ""}
                 </Content>
             </Layout>
         </Layout>
