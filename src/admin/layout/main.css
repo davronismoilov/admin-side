@@ -22,3 +22,12 @@
 .ant-layout{
     height: 100vh;
 }
+
+.site-layout-background{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+

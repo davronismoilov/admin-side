@@ -3,7 +3,7 @@ import {Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, Co
 import axios from "axios";
 
 
-const CourseAddModal = ({toggle, isOpen, getCourse, updatingModal}) => {
+const CourseUpdateModal = ({toggle, isOpen, getCourse, updatingModal}) => {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [price, setPrice] = useState("")
@@ -34,15 +34,17 @@ const CourseAddModal = ({toggle, isOpen, getCourse, updatingModal}) => {
 
     function getOneCourse(id) {
         axios.get(`http://localhost:9000/api/course/get/${id}`).then((res) => {
-            console.log(res.data, "Update Modal Get one course")
-            if (res.data.status) {
-                setName(res.data.data.name)
-                setDescription(res.data.data.description)
-                setDuration(res.data.data.duration)
-                setPrice(res.data.data.price)
-            }
-        }).catch((err) => {
-            console.log(err)
+            axios.get(`http://localhost:9000/api/v1/course/get/${id}`).then((res) => {
+                console.log(res.data, "Update Modal Get one course")
+                if (res.data.status) {
+                    setName(res.data.data.name)
+                    setDescription(res.data.data.description)
+                    setDuration(res.data.data.duration)
+                    setPrice(res.data.data.price)
+                }
+            }).catch((err) => {
+                console.log(err)
+            })
         })
     }
 
@@ -106,4 +108,4 @@ const CourseAddModal = ({toggle, isOpen, getCourse, updatingModal}) => {
     )
 }
 
-export default CourseAddModal
+export default CourseUpdateModal;

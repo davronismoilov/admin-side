@@ -4,46 +4,20 @@ import {
     UploadOutlined,
     UserOutlined,
     VideoCameraOutlined,
+    SettingOutlined,
+    LaptopOutlined,
+    NotificationOutlined
 } from '@ant-design/icons';
 import {Layout, Menu} from 'antd';
 import React, {useState} from 'react';
 import './main.css';
 import {Link} from "react-router-dom";
-import axios from "axios";
+import CustomHeader from "../header/Header";
 
 const {Header, Sider, Content} = Layout;
-const AdminContext = React.createContext([])
+
 
 function MainLayout() {
-    const [objects, setObject] = useState({
-        headers: ["id", "name", "username", "password"],
-        body: [{
-            id: 1,
-            name: "Maqsud",
-            username: "123",
-            password: 123
-        },
-            {
-                id: 2,
-                name: "Maqsud 2",
-                username: "123 cfs",
-                password: 123657676
-            },
-            {
-                id: 3,
-                name: "Maqsud 4",
-                username: "sdfsdfsdf sdf sdfsd fcfs",
-                password: 9999999
-            },
-        ]
-    })
-
-    function getDataFromServer(url) {
-        axios.get(url).then((res) => {
-            setObject(res.data);
-        })
-    }
-
     const [collapsed, setCollapsed] = useState(false);
     return (
         <Layout>
@@ -55,14 +29,8 @@ function MainLayout() {
                     defaultSelectedKeys={['1']}
                     items={[
                         {
-                            key: '1',
-                            icon: <Link to={"/"} onClick={getDataFromServer("http://localhost:9000/api/user/list")}>
-                                <UserOutlined/></Link>,
-                            label: 'user',
-                        },
-                        {
                             key: '2',
-                            icon: <Link to={"/"}><VideoCameraOutlined/></Link>,
+                            icon: <Link to={"/admin/course"}><VideoCameraOutlined/></Link>,
                             label: 'course',
                         },
                         {
@@ -80,6 +48,11 @@ function MainLayout() {
                             icon: <UploadOutlined/>,
                             label: 'admin',
                         },
+                        {
+                            key: '6',
+                            icon: <Link to={"/admin/settings"}><SettingOutlined/></Link>,
+                            label: 'settings',
+                        },
                     ]}
                 />
             </Sider>
@@ -95,6 +68,7 @@ function MainLayout() {
                         onClick: () => setCollapsed(!collapsed),
                     })}
                 </Header>
+                <CustomHeader/>
                 <Content
                     className="site-layout-background"
                     style={{
@@ -103,26 +77,6 @@ function MainLayout() {
                         minHeight: 280,
                     }}
                 >
-
-                    <table className={"table"}>
-                        <thead>
-                        <tr>
-                            {objects.headers.map((data) => {
-                                return <th>{data}</th>
-                            })}
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {objects.body.map((data, index) => {
-                            return <tr>
-                                {objects.headers.map((td) => {
-                                    return <td>{data[td]}</td>
-                                })}
-                            </tr>
-                        })}
-                        </tbody>
-
-                    </table>
 
                 </Content>
             </Layout>

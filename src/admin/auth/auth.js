@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import './auth.css';
-import axios from "axios";
 import {useNavigate} from "react-router";
 import {connect} from "react-redux";
 import {toast} from "react-toastify";
@@ -13,10 +12,10 @@ function Auth({authorization, login}) {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
 
-    useEffect(()=>{
-        if(authorization)
+    useEffect(() => {
+        if (authorization)
             navigate('/')
-    },[authorization])
+    }, [authorization])
 
 
     function loginFunc() {
