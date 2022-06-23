@@ -4,60 +4,62 @@ import Search from "antd/es/input/Search";
 
 const SectionTable = ({data, getSectionData, onSearch, toggleUpdate, deleteSectionItem, toggle, sectionName}) => {
 
+    const {update, headers, info, body} = data
+
     const [search, setSearch] = useState("")
+
 
     return (
         <div>
             <Row>
                 <Col>
-                    {data.update && <Button color="success" onClick={() => toggle(sectionName)}>
-                        + Add {sectionName}
-                    </Button>}
+                    {update ? <Button color='success' onClick={() => toggle(sectionName)}>
+                        &#10009; Add {sectionName}
+                    </Button> : ''}
                 </Col>
                 <Col sm={{size: 1, offset: 4}}>
                     {
-                        search && <Button color="link" onClick={() => {
+                        search && <Button color='warning' className='text-white' onClick={() => {
                             getSectionData(0);
                             setSearch("")
                         }}>Clear</Button>
                     }
                 </Col>
                 <Col sm={4}>
-                    <Search placeholder="input search text" onSearch={onSearch} enterButton />
-                    {/*onChange={(e) => setSearch(e.target.value)}*/}
+                    <Search placeholder="Search..." onSearch={onSearch} enterButton/>
                 </Col>
             </Row>
-            <table className={"table mt-4"}>
+            <table className={"table mt-4 table-bordered table-hover table-striped"}>
                 <thead>
                 <tr>
-                    {data.headers.map((head) => {
-                        return (<th>{head}</th>)
-                    })}
+                    {headers ? headers.map(head => <th key={head}>{head}</th>) : ''}
                 </tr>
                 </thead>
                 <tbody>
-                {data.body.content.map((elm, cnt) => {
-                    return <tr key={cnt}>
-                        {data.headers.map(head => {
-                            return (<td>{elm[head]}</td>)
-                        })}
+                {body ? body.content.map(elm => {
+                    return <tr key={elm.id}>
+                        {data.headers.map(head => <td>{elm[head]}</td>)}
                         {
-                            (data.delete || data.update || data.info) && <td>
-                                {data.delete && <Button color="danger" onClick={() => deleteSectionItem(data.elm.id)}>
-                                    Delete
-                                </Button>}
-                                {data.update &&
-                                    <Button color="primary" className="m-1" onClick={() => toggleUpdate(elm.id)}>
-                                        Update
-                                    </Button>}
-                                {data.info &&
-                                    <Button color="secondary" className="m-1" onClick={() => toggleUpdate(elm.id)}>
-                                        Info
-                                    </Button>}
+                            (data.delete || update || info) && <td>
+                                {
+                                    info && <Button color="secondary" className="m-1" onClick={() => toggleUpdate(elm.id)}>
+                                        &#10066;
+                                    </Button>
+                                }
+                                {
+                                    update && <Button color="warning" className="m-1" onClick={() => toggleUpdate(elm.id)}>
+                                        &#9998;
+                                    </Button>
+                                }
+                                {
+                                    data.delete && <Button color="danger" onClick={() => deleteSectionItem(elm.id)}>
+                                        &#10006;
+                                    </Button>
+                                }
                             </td>
                         }
                     </tr>
-                })}
+                }) : ''}
                 </tbody>
             </table>
         </div>

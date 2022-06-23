@@ -1,32 +1,15 @@
 import React, {useState} from 'react';
 import {Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, Col} from 'reactstrap';
-import axios from "axios";
+import {toast} from "react-toastify";
 
 
-const CourseAddModal = ({toggle}) => {
+const CourseAddModal = ({toggle, addCourse}) => {
     const [courseData, setCourseData] = useState({});
-    const BASE_URL = 'http://localhost:9000/api/v1/course';
 
     function handleSubmit() {
-        // let data = {
-        //     name,
-        //     description,
-        //     price,
-        //     duration
-        // }
-
-        //
-        // axios.post("http://localhost:9000/api/course/add", data).then((res) => {
-        //     axios.post(`${BASE_URL}/add`, courseData, {headers: {Authorization: localStorage.getItem("accessToken")}})
-        //         .then((res) => {
-        //             console.log(res)
-        //             toggle("course")
-        //             clearInput()
-        //             getSectionData(0)
-        //         }).catch(err => {
-        //         console.log(err)
-        //     })
-        // })
+        if (courseData.name && courseData.price && courseData.description && courseData.duration) {
+            addCourse(courseData)
+        } else toast.warn('You need to fill all blanks', {autoClose: 1500})
     }
 
     function clearInput() {
@@ -42,9 +25,8 @@ const CourseAddModal = ({toggle}) => {
                         <FormGroup>
                             <Label for="courseName">Name: </Label>
                             <Input type="text" name="name" id="courseName" placeholder="Enter a course name"
-                                   onChange={(e) => {
-                                       courseData.name = e.target.value;
-                                       setCourseData({...courseData})
+                                   onChange={({target: {value}}) => {
+                                       setCourseData({...courseData, name: value})
                                    }}
                                    value={courseData.name}
                             />
@@ -53,9 +35,8 @@ const CourseAddModal = ({toggle}) => {
                             <Label for="courseDescription">Description: </Label>
                             <Input type="textarea" name="description" id="courseDescription"
                                    placeholder="Enter a course description"
-                                   onChange={(e) => {
-                                       courseData.description = e.target.value;
-                                       setCourseData({...courseData});
+                                   onChange={({target: {value}}) => {
+                                       setCourseData({...courseData, description: value});
                                    }}
                                    value={courseData.description}
                             />
@@ -64,9 +45,8 @@ const CourseAddModal = ({toggle}) => {
                             <Label for="coursePrice">Price: </Label>
                             <Input type="number" name="price" id="coursePrice"
                                    placeholder="Enter a course price"
-                                   onChange={(e) => {
-                                       courseData.price = e.target.value;
-                                       setCourseData({...courseData});
+                                   onChange={({target: {value}}) => {
+                                       setCourseData({...courseData, price: value});
                                    }}
                                    value={courseData.price}
                             />
@@ -75,16 +55,15 @@ const CourseAddModal = ({toggle}) => {
                             <Label for="courseDuration">Duration: </Label>
                             <Input type="number" name="duration" id="courseDuration"
                                    placeholder="Enter a course duration"
-                                   onChange={(e) => {
-                                       courseData.duration = e.target.value;
-                                       setCourseData({...courseData})
+                                   onChange={({target: {value}}) => {
+                                       setCourseData({...courseData, duration: value})
                                    }}
                                    value={courseData.duration}
                             />
                         </FormGroup>
                         <Col sm={{size: 8, offset: 8}}>
                             <Button color="secondary" onClick={() => {
-                                toggle();
+                                toggle("course");
                                 clearInput()
                             }}>Cancel</Button>
                             <Button color={"danger"} className={"float-right mx-1"}

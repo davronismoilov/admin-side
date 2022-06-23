@@ -1,9 +1,9 @@
 import {configureStore} from "@reduxjs/toolkit";
 import api from "./middleware/api";
 import user from "./reducer/user";
-import course from "./reducer/course";
+import data from "./reducer/data";
 
 export default configureStore({
-    reducer: {user,course},
+    reducer: {user,data},
     middleware: [api]
 })

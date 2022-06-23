@@ -8,13 +8,14 @@ const api = ({dispatch}) => (next) => (action) => {
         return;
     }
     next(action)
-    const {url, method, onSuccess, onFail, data} = action.payload
+    const {url, method, onSuccess, onFail, data, headers} = action.payload
 
-
+    console.log(url)
     axios({
-        baseURL: 'http://192.168.197.66:9000/api/',
+        baseURL: 'http://10.10.1.157:8080/api/v1',
         url,
         method,
+        headers,
         data,
     }).then(res => {
         dispatch({

@@ -13,8 +13,8 @@ function Auth({authorization, login}) {
     const [password, setPassword] = useState('');
 
     useEffect(() => {
-        if (authorization)
-            navigate('/')
+        if (authorization || localStorage.getItem('access-token'))
+            navigate('/dashboard')
     }, [authorization])
 
 

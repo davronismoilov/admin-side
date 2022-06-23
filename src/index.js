@@ -7,6 +7,7 @@ import {Provider} from 'react-redux';
 import {BrowserRouter} from "react-router-dom";
 import store from "./store/store";
 import {ToastContainer} from "react-toastify";
+import reportWebVitals from "./reportWebVitals";
 
 import 'react-toastify/dist/ReactToastify.css';
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -23,3 +24,5 @@ root.render(
         </React.StrictMode>
     </BrowserRouter>
 );
+
+reportWebVitals();

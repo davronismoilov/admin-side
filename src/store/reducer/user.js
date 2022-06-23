@@ -3,7 +3,7 @@ import {apiCall} from "../action/api";
 import {toast} from 'react-toastify';
 
 
-const initialState = {user: {},authorization:false}
+const initialState = {user: {}, authorization: false}
 
 const slice = createSlice({
     name: 'user',
@@ -13,16 +13,17 @@ const slice = createSlice({
             localStorage.setItem('access-token', accessToken)
             localStorage.setItem('refresh-token', refreshToken)
             toast.success('Success', {autoClose: 500})
+            state.authorization=true
         },
-        onFail: (state, {payload: {message, data}}) => {
-            toast.error(message ? message : data.error, {autoClose: 1500})
+        onFail: (state, {payload: {data: {message}}}) => {
+            toast.error(message, {autoClose: 1500})
         },
     }
 })
 
 
 export const login = (data) => apiCall({
-    url: 'v1/auth/login',
+    url: 'user/auth/login',
     method: 'POST',
     onSuccess: slice.actions.onAuthSuccess.type,
     onFail: slice.actions.onFail.type,
