@@ -1,62 +1,50 @@
-import React, {useReducer, useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './auth.css';
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router";
+import {connect} from "react-redux";
+import {toast} from "react-toastify";
+import {login} from "../../store/reducer/user";
 
 
-const reducer = (state, action) => {
-    switch (action.type) {
-        case "LOGIN":
-            return {
-                ...state, [action.key]: action.value
-            }
-        default:
-            return {};
-    }
-};
-
-function Auth() {
-    const [auth, dispatch] = useReducer(reducer, {phoneNumber: "", password: ""});
-    const [success, setSuccess] = useState(false);
-
-
+function Auth({authorization, login}) {
     let navigate = useNavigate();
 
-    function handleInputChange(e) {
-        dispatch({
-            type: "LOGIN", key: e.target.name, value: e.target.value
-        })
-    }
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [password, setPassword] = useState('');
+
+    useEffect(()=>{
+        if(authorization)
+            navigate('/')
+    },[authorization])
 
 
-    function login() {
-        axios.post("http://localhost:9000/api/v1/auth/login", auth).then((res) => {
-            // if (res.data.statusCode === 200) {
-            if (res.data.statusCode === 200) {
-                localStorage.setItem("accessToken", res.data.accessToken)
-                localStorage.setItem("refreshToken", res.data.refreshToken);
-                return navigate("/admin");
-            }
-        })
+    function loginFunc() {
+        if (phoneNumber && password) {
+            login({phoneNumber, password})
+        } else
+            toast.error("You need to fill all blanks", {autoClose: 1500})
     }
 
     return <div>
-         <div className="container">
+        <div className="container">
             <div className="screen">
                 <div className="screen__content">
                     <div className="login">
                         <div className="login__field">
                             <i className="login__icon fas fa-user"/>
                             <input type="text" name="phoneNumber" className="login__input"
+                                   value={phoneNumber}
                                    placeholder="User name / Email"
-                                   onChange={handleInputChange}/>
+                                   onChange={({target: {value}}) => setPhoneNumber(value)}/>
                         </div>
                         <div className="login__field">
                             <i className="login__icon fas fa-lock"/>
                             <input type="password" name="password" className="login__input" placeholder="Password"
-                                   onChange={handleInputChange}/>
+                                   value={password}
+                                   onChange={({target: {value}}) => setPassword(value)}/>
                         </div>
-                        <button className="button login__submit" onClick={login}>
+                        <button className="button login__submit" onClick={loginFunc}>
                             <span className="button__text">Log In Now</span>
                         </button>
                     </div>
@@ -73,4 +61,4 @@ function Auth() {
 
 }
 
-export default Auth;
+export default connect(({user: {authorization}}) => ({authorization}), {login})(Auth);

@@ -8,15 +8,13 @@ import {
 import {Layout, Menu} from 'antd';
 import React, {useState} from 'react';
 import './main.css';
-import {Link, Route, Routes} from "react-router-dom";
-import User from "../user/user";
-import Course from "../course/course";
+import {Link} from "react-router-dom";
 import axios from "axios";
 
 const {Header, Sider, Content} = Layout;
 const AdminContext = React.createContext([])
 
-const MainLayout = () => {
+function MainLayout() {
     const [objects, setObject] = useState({
         headers: ["id", "name", "username", "password"],
         body: [{
