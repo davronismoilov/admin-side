@@ -54,7 +54,7 @@ function Auth() {
                                    onChange={handleInputChange}/>
                         </div>
                         <button className="button login__submit" onClick={login}>
-                            <span className="button__text">Log In Now</span>
+                            <span className="button__text">Log In </span>
                         </button>
                     </div>
                 </div>
