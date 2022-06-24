@@ -7,12 +7,14 @@ import Permission from "../settings/permission";
 import CourseAddModal from "../course/CourseAddModal";
 import GroupAddModal from "../group/GroupAddModal";
 import {connect} from "react-redux";
+import logo from '../../utils/img/logo.png'
 
 import {
     getMenuList,
     getDataWithPage,
     addCourse,
 } from "../../store/reducer/data";
+import {CardMedia} from "@mui/material";
 
 const {Header, Content, Sider} = Layout;
 
@@ -66,11 +68,11 @@ function Main({
         getMenuList()
     }, [])
 
-    useEffect(() => {
-        if (isNotAuthorization)
-            navigate('/')
-        getMenuList()
-    }, [isNotAuthorization])
+    // useEffect(() => {
+    //     if (isNotAuthorization)
+    //         navigate('/')
+    //     getMenuList()
+    // }, [isNotAuthorization])
 
 
 
@@ -89,6 +91,22 @@ function Main({
             }}
         >
             <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+                    <div className="row m-2 ">
+                        <div className={collapsed?'col-md-12':"col-md-4"}>
+                            <CardMedia
+                                component="img"
+                                sx={{ width: '100%', display: { xs: 'none', sm: 'block' },marginLeft:'auto'  }}
+                                image={logo}
+                                alt={'?'}
+                            />
+                        </div>
+                        <div className="col-md-4">
+                            <div className={collapsed?'text-white d-none':'text-white'} style={{fontSize:'20px'}}>
+                                <p >Oliy Mahad</p>
+                            </div>
+                        </div>
+                        <hr className={collapsed?'mt-2 text-white':'text-white'}/>
+                    </div>
                 <ul className='p-4'>
                     {
                         menuList ? menuList

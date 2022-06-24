@@ -4,15 +4,16 @@ import {connect} from "react-redux";
 import {toast} from "react-toastify";
 import {login, getMe} from "../../store/reducer/user";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import bgLogin from '../../utils/img/bg-login.jpg'
-import {makeStyles} from "@mui/styles";
+import bgImage from '../../utils/img/bg-login2.jpg'
+import logo from '../../utils/img/logo.png'
+
 import {
     Avatar,
     Box,
-    Button,
+    Button, CardMedia, Checkbox,
     Container,
     createTheme,
-    CssBaseline,
+    CssBaseline, FormControlLabel, Grid, Link, Paper,
     TextField,
     ThemeProvider,
     Typography
@@ -20,11 +21,6 @@ import {
 
 const theme = createTheme();
 
-const useStyles = makeStyles({
-    input: {
-        color: "blue"
-    }
-});
 
 
 function Auth({authorization, login, getMe}) {
@@ -57,50 +53,57 @@ function Auth({authorization, login, getMe}) {
                 autoClose: 1500
             })
     };
-    const classes = useStyles();
 
-    return <Box sx={{
-        backgroundImage: `url(${bgLogin})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        marginTop:0,
-        width: "100%",
-        height: "100vh",
-        paddingY:'10px'
-    }}>
-        <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xs">
-                <CssBaseline/>
+    return  <ThemeProvider theme={theme}>
+        <Grid container component="main" sx={{ height: '100vh' }}>
+            <CssBaseline />
+            <Grid
+                item
+                xs={false}
+                sm={4}
+                md={7}
+                sx={{
+                    backgroundImage: 'url('+bgImage+')',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundColor: (t) =>
+                        t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                }}
+            />
+            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <Box
                     sx={{
-                        marginTop: 8,
+                        my: 8,
+                        mx: 4,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
-                        <LockOutlinedIcon/>
+                    <Avatar sx={{ m: 1, bgcolor: 'black', width:'25%',height:'25%',padding:'10px' }}>
+                        <CardMedia
+                            component="img"
+                            sx={{ width: '60%', display: { xs: 'none', sm: 'block' } }}
+                            image={logo}
+                            alt={'?'}
+                        />
                     </Avatar>
-                    <Typography component="h1" variant="h5" className='text-white'>
+                    <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
+                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                         <TextField
-                            InputProps={{style:{color:'white'}}}
-                            InputLabelProps={{style:{color:'white'}}}
                             margin="normal"
                             required
                             fullWidth
                             id="email"
-                            label="Mail/Phone number"
+                            label="Email Address"
                             name="phoneNumber"
                             autoComplete="email"
                             autoFocus
                         />
                         <TextField
-                            InputProps={{style:{color:'white'}}}
-                            InputLabelProps={{style:{color:'white'}}}
                             margin="normal"
                             required
                             fullWidth
@@ -110,19 +113,23 @@ function Auth({authorization, login, getMe}) {
                             id="password"
                             autoComplete="current-password"
                         />
+                        <FormControlLabel
+                            control={<Checkbox value="remember" color="primary" />}
+                            label="Remember me"
+                        />
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{mt: 3, mb: 2}}
+                            sx={{ mt: 3, mb: 2 }}
                         >
                             Sign In
                         </Button>
                     </Box>
                 </Box>
-            </Container>
-        </ThemeProvider>
-    </Box>
+            </Grid>
+        </Grid>
+    </ThemeProvider>
 
 }
 
