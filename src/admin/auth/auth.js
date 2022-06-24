@@ -4,6 +4,8 @@ import {connect} from "react-redux";
 import {toast} from "react-toastify";
 import {login, getMe} from "../../store/reducer/user";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import bgLogin from '../../utils/img/bg-login.jpg'
+import {makeStyles} from "@mui/styles";
 import {
     Avatar,
     Box,
@@ -17,6 +19,12 @@ import {
 } from "@mui/material";
 
 const theme = createTheme();
+
+const useStyles = makeStyles({
+    input: {
+        color: "blue"
+    }
+});
 
 
 function Auth({authorization, login, getMe}) {
@@ -49,59 +57,76 @@ function Auth({authorization, login, getMe}) {
                 autoClose: 1500
             })
     };
+    const classes = useStyles();
 
-    return <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs">
-            <CssBaseline/>
-            <Box
-                sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
-            >
-                <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
-                    <LockOutlinedIcon/>
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign in
-                </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Mail/Phone number"
-                        name="phoneNumber"
-                        autoComplete="email"
-                        autoFocus
-                    />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{mt: 3, mb: 2}}
-                    >
-                        Sign In
-                    </Button>
+    return <Box sx={{
+        backgroundImage: `url(${bgLogin})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        marginTop:0,
+        width: "100%",
+        height: "100vh",
+        paddingY:'10px'
+    }}>
+        <ThemeProvider theme={theme}>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline/>
+                <Box
+                    sx={{
+                        marginTop: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
+                        <LockOutlinedIcon/>
+                    </Avatar>
+                    <Typography component="h1" variant="h5" className='text-white'>
+                        Sign in
+                    </Typography>
+                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
+                        <TextField
+                            InputProps={{style:{color:'white'}}}
+                            InputLabelProps={{style:{color:'white'}}}
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Mail/Phone number"
+                            name="phoneNumber"
+                            autoComplete="email"
+                            autoFocus
+                        />
+                        <TextField
+                            InputProps={{style:{color:'white'}}}
+                            InputLabelProps={{style:{color:'white'}}}
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{mt: 3, mb: 2}}
+                        >
+                            Sign In
+                        </Button>
+                    </Box>
                 </Box>
-            </Box>
-        </Container>
-    </ThemeProvider>
+            </Container>
+        </ThemeProvider>
+    </Box>
 
 }
+
+
 
 export default connect(({user: {authorization}}) => ({authorization}),
     {login, getMe})(Auth);
