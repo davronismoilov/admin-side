@@ -49,7 +49,6 @@ function Permission() {
 
     const saveBtnOnclick = () => {
         switchStatus.forEach((el, i) => data.content[i].permissions.visibility = switchStatus[i]);
-        console.log("DATA", data)
         axios.post(`${BASE_URL}/edit`, data, {headers: {Authorization: localStorage.getItem("accessToken")}}).then(resp => {
                 if (resp.data.statusCode === 200)
                     console.log('data updated');

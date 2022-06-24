@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Layout} from 'antd';
 import './main.css'
 import SectionTable from "../section/SectionTable";
-import Permission from "../settings/Permission";
+import Permission from "../settings/permission";
 import CourseAddModal from "../course/CourseAddModal";
 import GroupAddModal from "../group/GroupAddModal";
 import {connect} from "react-redux";
