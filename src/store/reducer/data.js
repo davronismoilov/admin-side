@@ -23,9 +23,9 @@ const slice = createSlice({
             state.sectionData = []
         },
         onFail: (state, {payload}) => {
-            state.isNotAuthorization = true
             localStorage.setItem('access-token', '')
             localStorage.setItem('refresh-token', '')
+            state.isNotAuthorization = true
             state.sectionData = []
         },
 

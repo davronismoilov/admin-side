@@ -19,11 +19,11 @@ const {Header, Content, Sider} = Layout;
 function Main({
                   menuList,
                   pages,
+                  isNotAuthorization,
                   sectionData,
                   getDataWithPage,
                   getMenuList,
                   addCourse,
-                  isNotAuthorization
               }) {
 
     const navigate = useNavigate()
@@ -63,16 +63,15 @@ function Main({
 
 
     useEffect(() => {
-        if (!localStorage.getItem('access-token') || isNotAuthorization)
-            navigate('/')
         getMenuList()
     }, [])
 
-
     useEffect(() => {
-        if (!localStorage.getItem('access-token') || isNotAuthorization)
+        if (isNotAuthorization)
             navigate('/')
+        getMenuList()
     }, [isNotAuthorization])
+
 
 
     useEffect(() => {
@@ -142,5 +141,5 @@ function Main({
     );
 }
 
-export default connect(({data: {sectionData, menuList, pages, isNotAuthorization}}) => ({sectionData, menuList, pages}),
+export default connect(({data: {sectionData, menuList, pages, isNotAuthorization}}) => ({sectionData, menuList, pages,isNotAuthorization}),
     {getDataWithPage, getMenuList, addCourse})(Main);
