@@ -3,7 +3,7 @@ import {apiCall} from "../action/api";
 import {toast} from 'react-toastify';
 
 
-const initialState = {sectionData: [], pages: 0, menuList: []}
+const initialState = {sectionData: [], pages: 0, menuList: [], isNotAuthorization: false}
 
 const slice = createSlice({
     name: 'data',
@@ -23,6 +23,9 @@ const slice = createSlice({
             state.sectionData = []
         },
         onFail: (state, {payload}) => {
+            state.isNotAuthorization = true
+            localStorage.setItem('access-token', '')
+            localStorage.setItem('refresh-token', '')
             state.sectionData = []
         },
 

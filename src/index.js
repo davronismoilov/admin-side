@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import 'bootstrap/dist/css/bootstrap.css'
-import 'antd/dist/antd.css'
 import {Provider} from 'react-redux';
 import {BrowserRouter} from "react-router-dom";
 import store from "./store/store";
@@ -11,6 +9,7 @@ import reportWebVitals from "./reportWebVitals";
 
 import 'react-toastify/dist/ReactToastify.css';
 import "bootstrap/dist/css/bootstrap.min.css";
+import 'antd/dist/antd.css'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

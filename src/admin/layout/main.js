@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useNavigate} from "react-router";
 import {Layout} from 'antd';
 import './main.css'
 import SectionTable from "../section/SectionTable";
@@ -21,8 +22,11 @@ function Main({
                   sectionData,
                   getDataWithPage,
                   getMenuList,
-                  addCourse
+                  addCourse,
+                  isNotAuthorization
               }) {
+
+    const navigate = useNavigate()
 
     const [currentPage, setCurrentPage] = useState(0);
     const [courseModalOpen, setCourseModalOpen] = useState(false);
@@ -59,12 +63,19 @@ function Main({
 
 
     useEffect(() => {
+        if (!localStorage.getItem('access-token') || isNotAuthorization)
+            navigate('/')
         getMenuList()
     }, [])
 
 
     useEffect(() => {
+        if (!localStorage.getItem('access-token') || isNotAuthorization)
+            navigate('/')
+    }, [isNotAuthorization])
 
+
+    useEffect(() => {
         if (menuList[0]) {
             getDataWithPage(menuList[0].id, currentPage)
             setCurrentSectionName(menuList[0].sectionName)
@@ -131,5 +142,5 @@ function Main({
     );
 }
 
-export default connect(({data: {sectionData, menuList, pages}}) => ({sectionData, menuList, pages}),
+export default connect(({data: {sectionData, menuList, pages, isNotAuthorization}}) => ({sectionData, menuList, pages}),
     {getDataWithPage, getMenuList, addCourse})(Main);
